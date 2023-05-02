@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.zabalketa.MainActivity">
+    <item
+        android:id="@+id/miStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_baseline_bar_chart_24"
+        android:title="Stats"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/miRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        android:title="Refresh"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/miPerfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Perfil"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/miSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Search"
+        app:showAsAction="always" />
+</menu>

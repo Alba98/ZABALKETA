@@ -8,40 +8,55 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/socialicons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/socialicons"
         android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:background="@drawable/border_bottom">
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_baseline_bar_chart_24"/>
+        android:background="@drawable/border_bottom"
+        android:gravity="center">
 
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_baseline_refresh_24"/>
+            android:src="@drawable/ic_baseline_bar_chart_24" />
 
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_baseline_person_24"/>
+            android:src="@drawable/ic_baseline_refresh_24" />
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_baseline_search_24"/>
+            android:src="@drawable/ic_baseline_person_24" />
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_baseline_search_24" />
 
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPosiciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/socialicons"
+        android:layout_marginTop="-1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>

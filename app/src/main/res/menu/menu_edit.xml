@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.zabalketa.MainActivity">
+    <item
+        android:id="@+id/miBorrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Borrar"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/miModificar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Modificar"
+        app:showAsAction="ifRoom" />
+
+</menu>
