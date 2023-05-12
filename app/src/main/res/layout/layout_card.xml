@@ -35,7 +35,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvDescripcion"
         android:layout_width="59dp"
         android:layout_height="17dp"
         android:text="TextView"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/tvDescripcion">
 
         <Button
             android:id="@+id/bEditar"

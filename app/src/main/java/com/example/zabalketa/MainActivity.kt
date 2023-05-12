@@ -10,12 +10,18 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.example.zabalketa.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    val database by lazy { BaseDatos.getDatabase(this) }
+    val repositorio by lazy {  Repositorio(database.miDAO()) }
+
+    val nieblasVM:NieblaVM by viewModels{WordViewModelFactory(repositorio)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -39,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_show, menu)
+        //menuInflater.inflate(R.menu.menu_show, menu)
         return true
     }
 

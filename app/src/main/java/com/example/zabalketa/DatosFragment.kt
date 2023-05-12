@@ -33,8 +33,24 @@ class DatosFragment : Fragment() {
         Log.d("fragmentoDatos", "ha llegado a dATOS")
 
 
-        Log.d("desde donde",findNavController().currentBackStackEntry?.id.toString())
-        Log.d("id segundo", R.id.SecondFragment.toString())
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.menu_edit, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                return when (menuItem.itemId) {
+                    R.id.miModificar -> {
+                        findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        },viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
 

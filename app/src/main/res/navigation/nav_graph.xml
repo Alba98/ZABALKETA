@@ -35,7 +35,7 @@
     <fragment
         android:id="@+id/datosFragment"
         android:name="com.example.zabalketa.DatosFragment"
-        android:label="Gestión Películas"
+        android:label="Gestión Niebla"
         tools:layout="@layout/fragment_datos">
         <action
             android:id="@+id/action_datosFragment_to_SecondFragment"
