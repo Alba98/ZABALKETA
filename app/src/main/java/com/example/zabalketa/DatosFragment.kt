@@ -32,6 +32,29 @@ class DatosFragment : Fragment() {
 
         Log.d("fragmentoDatos", "ha llegado a dATOS")
 
+        binding.apply {
+            tvFecha.setOnClickListener {
+                // create new instance of DatePickerFragment
+                val datePickerFragment = DatePickerFragment()
+                val supportFragmentManager = requireActivity().supportFragmentManager
+
+                // we have to implement setFragmentResultListener
+                supportFragmentManager.setFragmentResultListener(
+                    "REQUEST_KEY",
+                    viewLifecycleOwner
+                ) { resultKey, bundle ->
+                    if (resultKey == "REQUEST_KEY") {
+                        val date = bundle.getString("SELECTED_DATE")
+                        // tvFecha.text = date
+                        tvFecha.setText(date)
+                    }
+                }
+
+                // show
+                datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
+            }
+        }
+
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
@@ -58,4 +81,14 @@ class DatosFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+/*
+    private fun showDatePickerDialog() {
+        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
+        datePicker.show(FragmentDatosBinding, "datePicker")
+    }
+
+    private fun onDateSelected(day: Int, month: Int, year: Int) {
+        //tvFecha.setText("Has seleccionado el $day del $month del año $year")
+    }
+    */
 }
