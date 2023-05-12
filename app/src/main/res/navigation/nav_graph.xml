@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.zabalketa.SecondFragment"
-        android:label="Listado Películas"
+        android:label="DATOS"
         tools:layout="@layout/fragment_second">
 
         <action
