@@ -3,30 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
+    android:label="Listado Películas"
     app:startDestination="@id/FirstFragment">
 
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.zabalketa.FirstFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Bienvenid@"
         tools:layout="@layout/fragment_first">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            app:destination="@id/SecondFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
         android:name="com.example.zabalketa.SecondFragment"
-        android:label="@string/second_fragment_label"
+        android:label="Listado Películas"
         tools:layout="@layout/fragment_second">
 
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            app:destination="@id/FirstFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_SecondFragment_to_datosFragment"
+            app:destination="@id/datosFragment"
+            app:popUpToInclusive="true" />
     </fragment>
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="com.example.zabalketa.LoginActivity"
-        android:label="LoginActivity" />
+    <fragment
+        android:id="@+id/datosFragment"
+        android:name="com.example.zabalketa.DatosFragment"
+        android:label="Gestión Películas"
+        tools:layout="@layout/fragment_datos">
+        <action
+            android:id="@+id/action_datosFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment"
+            app:popUpTo="@id/SecondFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

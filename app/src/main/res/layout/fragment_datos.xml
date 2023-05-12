@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DatosFragment">
+
+    <EditText
+        android:id="@+id/tvTituloDatos"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="48dp"
+        android:hint="Título"
+        android:inputType="text"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@id/tvGeneroDatos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/tvGeneroDatos"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="48dp"
+        android:hint="Género"
+        android:inputType="text"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@id/tvEstrenoDatos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloDatos" />
+
+    <EditText
+        android:id="@+id/tvEstrenoDatos"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="48dp"
+        android:hint="Año de estreno"
+        android:inputType="number"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toTopOf="@id/bInsertar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvGeneroDatos" />
+
+    <Button
+        android:id="@+id/bInsertar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insertar"
+        app:layout_constraintBottom_toTopOf="@+id/bModificar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEstrenoDatos" />
+
+    <Button
+        android:id="@+id/bModificar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modificar"
+        app:layout_constraintBottom_toTopOf="@id/bBorrar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bInsertar" />
+
+    <Button
+        android:id="@+id/bBorrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Borrar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bModificar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
