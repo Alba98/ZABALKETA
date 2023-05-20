@@ -13,6 +13,6 @@ data class Usuario(
     var username: String = "",
     @NotNull @ColumnInfo (name = "clave")
     var clave: String = "",
-    @NotNull @ColumnInfo (name = "region")
-    var region: String = "",
+    @NotNull @ColumnInfo (name = "idRegion")
+    var idRegion: String = "",
 ) {}

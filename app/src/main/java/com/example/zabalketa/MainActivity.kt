@@ -18,10 +18,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
-    val database by lazy { BaseDatos.getDatabase(this) }
-    val repositorio by lazy {  Repositorio(database.miDAO()) }
-
+    val dataBase by lazy { BaseDatos.getDatabase(this) }
+    val repositorio by lazy {  Repositorio(dataBase.miNieblaDAO()) }
     val nieblasVM:NieblaVM by viewModels{WordViewModelFactory(repositorio)}
+
+    val miRepositorioUsuario by lazy { RepositorioUsuarios(dataBase.miUsuarioDAO()) }
+    val UsuarioVM:UsuarioVM by viewModels { UsuarioVMFactory(miRepositorioUsuario) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)

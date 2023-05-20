@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.zabalketa.databinding.FragmentFirstBinding
 
@@ -31,14 +32,27 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var miUsuario =Usuario()
+        (activity as MainActivity).UsuarioVM.miUsuario.observe(activity as MainActivity){ usuario->
+            miUsuario=usuario
+        }
 
         binding.loginbtn.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            (activity as MainActivity).UsuarioVM.buscarPorUsername(
+                binding.username.toString()
+            )
+
+            if(miUsuario.clave ==  binding.password.toString()) {
+                Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        (activity as MainActivity).UsuarioVM.miUsuario.removeObservers(activity as MainActivity)
     }
 }
