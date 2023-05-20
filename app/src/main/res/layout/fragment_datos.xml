@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/lForm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -23,25 +24,146 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_margin="48dp"
+                android:clickable="true"
+                android:focusable="false"
                 android:gravity="center_vertical"
                 android:hint="Fecha"
                 android:inputType="date"
-                android:focusable="false"
-                android:clickable="true"
                 android:maxLines="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <Switch
-                android:id="@+id/bNiebla"
+            <LinearLayout
+                android:id="@+id/lNiebla"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_margin="48dp"
-                android:gravity="center_vertical"
-                android:text="¿Hay niebla?" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <Switch
+                    android:id="@+id/bNiebla"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:text="¿Hay niebla?" />
+
+                <Spinner
+                    android:id="@+id/sFranja"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Seleciona franjas horarias"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rFranja1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onRadioButtonClicked"
+                            android:text="9-12" />
+
+                        <RadioButton
+                            android:id="@+id/rFranja2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onRadioButtonClicked"
+                            android:text="9-12" />
+
+                        <RadioButton
+                            android:id="@+id/rFranja3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:onClick="onRadioButtonClicked"
+                            android:text="6-9" />
+
+                    </LinearLayout>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lLluvia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Switch
+                    android:id="@+id/bLluvia"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:text="¿Hay lluvia?" />
+
+                <SeekBar
+                    android:id="@+id/sbDuracionLluvia"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:min="0"
+                    android:max="24"
+                    android:progress="7"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lCorteAgua"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Switch
+                    android:id="@+id/bCorteAgua"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:text="¿Cortes de agua?" />
+
+                <SeekBar
+                    android:id="@+id/sbDuracionCorte"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:max="24"
+                    android:min="0"
+                    android:progress="7" />
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/tvDescripcion"
