@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-@Database(entities = arrayOf(Usuario::class,Region::class, Niebla::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Usuario::class,Region::class, Niebla::class, Densidad::class, FranjaHoraria::class), version = 1, exportSchema = false)
 abstract class BaseDatos:RoomDatabase() {
     abstract fun miUsuarioDAO():UsuarioDAO
     abstract fun miNieblaDAO():NieblaDAO
@@ -44,12 +44,29 @@ abstract class BaseDatos:RoomDatabase() {
                 val usuariosIniciales = listOf(
                     Usuario(username = "albatxuL", clave = "test", idRegion = "1")
                 )
+                val densidadesIniciales = listOf(
+                    Densidad(densidad = "Intensa"),
+                    Densidad(densidad="Normal"),
+                    Densidad(densidad="Poco intensa")
+                )
+                val franjaHorariaIniciales = listOf(
+                    FranjaHoraria(franja = "6:00 a 9:00 am"),
+                    FranjaHoraria(franja = "9:00 a 12:00 am"),
+                    FranjaHoraria(franja = "12:00 a 14:00 am"),
+                    FranjaHoraria(franja = "14:00 a 18:00 am"),
+                    FranjaHoraria(franja = "18:00 a 21:00 am"),
+                    FranjaHoraria(franja = "21:00 a 24:00 am"),
+                    FranjaHoraria(franja = "24:00 a 6:00 am")
+                )
                 // Inserta las películas iniciales en la base de datos
                 val viewModelScope = CoroutineScope(Dispatchers.IO)
                 viewModelScope.launch {
                     // Realizar la operación en segundo plano (p. ej., poblar la base de datos)
                     regionesIniciales.forEach { region -> INSTANCE?.miUsuarioDAO()?.insertarRegion(region) }
                     usuariosIniciales.forEach { usuario -> INSTANCE?.miUsuarioDAO()?.insertar(usuario) }
+
+                    densidadesIniciales.forEach { densidad -> INSTANCE?.miNieblaDAO()?.insertarDensidad(densidad) }
+                    franjaHorariaIniciales.forEach { franja -> INSTANCE?.miNieblaDAO()?.insertarFranjaHoraria(franja) }
                 }
             }
         }

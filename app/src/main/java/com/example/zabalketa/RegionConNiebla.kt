@@ -3,10 +3,10 @@ package com.example.zabalketa
 import androidx.room.Embedded
 import androidx.room.Relation
 
-data class RegionConUsuario(
+data class RegionConNiebla(
     @Embedded val genero: Region,
     @Relation(
         parentColumn = "id",
         entityColumn = "region")
-    val regiones: List<Usuario>
+    val regiones: List<Niebla>
 )
