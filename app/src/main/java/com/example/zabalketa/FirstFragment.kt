@@ -32,27 +32,29 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var miUsuario =Usuario()
-        (activity as MainActivity).UsuarioVM.miUsuario.observe(activity as MainActivity){ usuario->
-            miUsuario=usuario
-        }
-
+        var miUsuario = Usuario()
         binding.loginbtn.setOnClickListener {
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            (activity as MainActivity).UsuarioVM.buscarPorUsername(
-                binding.username.toString()
-            )
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 
-            if(miUsuario.clave ==  binding.password.toString()) {
-                Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            }
+            // (activity as MainActivity).UsuarioVM.buscarPorUsername(
+            //     binding.username.toString()
+            // )
+            // (activity as MainActivity).UsuarioVM.miUsuario.observe(activity as MainActivity){ usuario->
+            //     miUsuario=usuario
+            // }
+
+            // Toast.makeText(activity,"Bienvenid@" + miUsuario, Toast.LENGTH_LONG).show()
+
+            // if(miUsuario.clave ==  binding.password.toString()) {
+            //     Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
+            //      findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            // }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (activity as MainActivity).UsuarioVM.miUsuario.removeObservers(activity as MainActivity)
+        //(activity as MainActivity).UsuarioVM.miUsuario.removeObservers(activity as MainActivity)
     }
 }
