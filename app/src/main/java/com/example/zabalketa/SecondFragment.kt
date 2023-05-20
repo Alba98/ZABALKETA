@@ -46,7 +46,7 @@ class SecondFragment : Fragment() {
             miRecyclerView = binding.rvPosiciones
             miRecyclerView.layoutManager = LinearLayoutManager(activity)
             //it es la lista de peliculas
-            miRecyclerView.adapter=Adaptador(it)
+            miRecyclerView.adapter=AdaptadorNiebla(it)
         }
 
         val menuHost: MenuHost = requireActivity()
