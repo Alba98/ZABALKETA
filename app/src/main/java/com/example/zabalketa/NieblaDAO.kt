@@ -31,6 +31,10 @@ interface NieblaDAO {
     @Query("SELECT * FROM tabla_nieblas ORDER BY fecha ASC")
     fun MostrarTodas(): Flow<List<Niebla>>
 
+    @Query("SELECT t.id, t.fecha, r.region, d.densidad FROM tabla_regiones as r, tabla_nieblas as t, tabla_densidades as d where t.idRegion like r.id and t.idDensidad like d.id")
+    fun MostrarTodasNiebla():Flow<List<NieblaClase>>
+
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun Insertar(Niebla: Niebla)
 

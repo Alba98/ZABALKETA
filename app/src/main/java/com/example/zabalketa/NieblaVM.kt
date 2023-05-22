@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 class NieblaVM(private val repositorio: Repositorio) : ViewModel() {
     val datosNieblas:LiveData<List<Niebla>> = repositorio.listaNieblas.asLiveData()
     lateinit var Niebla:LiveData<Niebla>
+    val datosNieblas2: LiveData<List<NieblaClase>> = repositorio.listaNieblas2.asLiveData()
 
     fun Insertar(miNiebla: Niebla) = viewModelScope.launch {
         repositorio.Insertar(miNiebla)

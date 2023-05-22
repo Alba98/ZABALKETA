@@ -23,7 +23,7 @@ abstract class BaseDatos:RoomDatabase() {
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     BaseDatos::class.java,
-                    "my_app_database"
+                    "zabalketa_database"
                 )
                     .addCallback(roomCallback)
                     .build().also { INSTANCE = it }
