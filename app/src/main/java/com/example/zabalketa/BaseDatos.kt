@@ -19,11 +19,12 @@ abstract class BaseDatos:RoomDatabase() {
         private var INSTANCE:BaseDatos?=null
 
         fun getDatabase(context:Context):BaseDatos{
+
             return INSTANCE?: synchronized(this){
                 INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     BaseDatos::class.java,
-                    "my_app_database"
+                    "zabalketa_database"
                 )
                     .addCallback(roomCallback)
                     .build().also { INSTANCE = it }

@@ -32,8 +32,8 @@ class AdaptadorNiebla(val Nieblas: List<Niebla>) : RecyclerView.Adapter<Adaptado
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvFecha.text="FECHA: ${Nieblas[position].fecha}"
-        holder.tvRegion.text="REGION: ${Nieblas[position].region}"
-        holder.tvDescripcion.text="${Nieblas[position].descripcion}"
+        holder.tvRegion.text="REGION: ${Nieblas[position].idRegion}"
+        holder.tvDescripcion.text="${Nieblas[position].idDensidad}"
         holder.id=Nieblas[position].id
     }
 
