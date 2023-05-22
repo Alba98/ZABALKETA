@@ -10,6 +10,9 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.zabalketa.databinding.FragmentDatosBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DatosFragment : Fragment() {
     private var _binding: FragmentDatosBinding? = null
@@ -33,6 +36,33 @@ class DatosFragment : Fragment() {
         Log.d("fragmentoDatos", "ha llegado a dATOS")
 
         binding.apply {
+            // Obtener la fecha actual
+            val currentDate = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val formattedDate = dateFormat.format(currentDate.time)
+
+            // Establecer la fecha actual en el EditText
+            tvFecha.setText(formattedDate)
+
+            tvFecha.setOnClickListener {
+                val datePickerFragment = DatePickerFragment()
+                val supportFragmentManager = requireActivity().supportFragmentManager
+
+                supportFragmentManager.setFragmentResultListener(
+                    "REQUEST_KEY",
+                    viewLifecycleOwner
+                ) { resultKey, bundle ->
+                    if (resultKey == "REQUEST_KEY") {
+                        val date = bundle.getString("SELECTED_DATE")
+                        tvFecha.setText(date) // Actualiza el texto del EditText con la fecha seleccionada
+                        Toast.makeText(activity,"Actualizar fecha", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
+            }
+
+            /*
             tvFecha.setOnClickListener {
                 // create new instance of DatePickerFragment
                 val datePickerFragment = DatePickerFragment()
@@ -53,6 +83,7 @@ class DatosFragment : Fragment() {
                 // show
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }
+             */
         }
 
 

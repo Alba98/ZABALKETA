@@ -1,5 +1,4 @@
 package com.example.zabalketa
-
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -13,13 +12,16 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
     private val calendar = Calendar.getInstance()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // default date
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        // return new DatePickerDialog instance
-        return DatePickerDialog(requireActivity(), R.style.DatePickerTheme,this, year, month, day)
+        val datePickerDialog = DatePickerDialog(requireActivity(), R.style.DatePickerTheme, this, year, month, day)
+
+        // Establecer la fecha actual como fecha predeterminada
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
+        return datePickerDialog
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -27,10 +29,11 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-        val selectedDate = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(calendar.time)
+        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
 
-        val selectedDateBundle = Bundle()
-        selectedDateBundle.putString("SELECTED_DATE", selectedDate)
+        val selectedDateBundle = Bundle().apply {
+            putString("SELECTED_DATE", selectedDate)
+        }
 
         setFragmentResult("REQUEST_KEY", selectedDateBundle)
     }
