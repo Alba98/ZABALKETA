@@ -34,21 +34,21 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var miUsuario = Usuario()
         binding.loginbtn.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 
-            // (activity as MainActivity).UsuarioVM.buscarPorUsername(
-            //     binding.username.toString()
-            // )
-            // (activity as MainActivity).UsuarioVM.miUsuario.observe(activity as MainActivity){ usuario->
-            //     miUsuario=usuario
-            // }
+            (activity as MainActivity).UsuarioVM.buscarPorUsername(
+                binding.username.text.toString()
+            )
+            (activity as MainActivity).UsuarioVM.miUsuario.observe(activity as MainActivity){ usuario->
+                miUsuario=usuario
+            }
 
-            // Toast.makeText(activity,"Bienvenid@" + miUsuario, Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, miUsuario.toString(), Toast.LENGTH_LONG).show()
 
-            // if(miUsuario.clave ==  binding.password.toString()) {
-            //     Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
-            //      findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            // }
+            if(miUsuario.clave ==  binding.password.toString()) {
+                Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
+                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
         }
     }
 

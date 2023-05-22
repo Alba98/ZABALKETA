@@ -10,6 +10,7 @@ import java.util.*
 class UsuarioVM(private val miRepositorio: RepositorioUsuarios): ViewModel() {
     val listaUsuarios: LiveData<List<Usuario>> = miRepositorio.listaUsuarios.asLiveData()
     lateinit var miUsuario: LiveData<Usuario>
+  //  lateinit var miUsuarioClase: LiveData<UsuarioClase>
     lateinit var listaRegions: LiveData<List<Region>>
     lateinit var miRegion: LiveData<Region>
     val listaUsuarios2: LiveData<List<UsuarioClase>> = miRepositorio.listaUsuarios2.asLiveData()
