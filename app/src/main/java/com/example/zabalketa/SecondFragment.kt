@@ -42,10 +42,9 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //lista de pelicuals es dinamica
-        (activity as MainActivity).nieblasVM.datosNieblas.observe(activity as MainActivity) {
+        (activity as MainActivity).nieblasVM.datosNieblas2.observe(activity as MainActivity) {
             miRecyclerView = binding.rvPosiciones
             miRecyclerView.layoutManager = LinearLayoutManager(activity)
-            //it es la lista de peliculas
             miRecyclerView.adapter=AdaptadorNiebla(it)
         }
 

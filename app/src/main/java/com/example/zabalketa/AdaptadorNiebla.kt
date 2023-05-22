@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 
-class AdaptadorNiebla(val Nieblas: List<Niebla>) : RecyclerView.Adapter<AdaptadorNiebla.ViewHolder>() {
+class AdaptadorNiebla(val Nieblas: List<NieblaClase>) : RecyclerView.Adapter<AdaptadorNiebla.ViewHolder>() {
     inner class ViewHolder (v: View): RecyclerView.ViewHolder(v){
         var tvFecha: TextView
         var tvRegion: TextView
@@ -32,8 +32,8 @@ class AdaptadorNiebla(val Nieblas: List<Niebla>) : RecyclerView.Adapter<Adaptado
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvFecha.text="FECHA: ${Nieblas[position].fecha}"
-        holder.tvRegion.text="REGION: ${Nieblas[position].idRegion}"
-        holder.tvDescripcion.text="${Nieblas[position].idDensidad}"
+        holder.tvRegion.text="REGION: ${Nieblas[position].region}"
+        holder.tvDescripcion.text="${Nieblas[position].densidad}"
         holder.id=Nieblas[position].id
     }
 
