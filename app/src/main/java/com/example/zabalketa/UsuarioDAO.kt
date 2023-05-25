@@ -24,7 +24,7 @@ interface UsuarioDAO {
     @Query("SELECT * FROM tabla_usuarios where id like :id")
     fun buscarPorId(id:Int):Flow<Usuario>
 
-    @Query("SELECT * FROM tabla_usuarios where username like :username")
+    @Query("SELECT * FROM tabla_usuarios WHERE username LIKE :username")
     fun buscarPorUsername(username:String):Flow<Usuario>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

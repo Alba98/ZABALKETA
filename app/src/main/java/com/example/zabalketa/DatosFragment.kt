@@ -10,9 +10,13 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.zabalketa.databinding.FragmentDatosBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class DatosFragment : Fragment() {
     private var _binding: FragmentDatosBinding? = null
@@ -40,11 +44,29 @@ class DatosFragment : Fragment() {
             val currentDate = Calendar.getInstance()
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val formattedDate = dateFormat.format(currentDate.time)
+            var formattedDate_ : Date?= null
 
             // Establecer la fecha actual en el EditText
             tvFecha.setText(formattedDate)
 
-            tvFecha.setOnClickListener {
+            binding.tvFecha.setOnClickListener {
+                // Create the date picker builder and set the title
+                val builder = MaterialDatePicker.Builder.datePicker()
+                // create the date picker
+                val datePicker = builder.build()
+                // set listener when date is selected
+                datePicker.addOnPositiveButtonClickListener {
+                    // Create calendar object and set the date to be that returned from selection
+                    val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+                    calendar.time = Date(it)
+                    formattedDate_ =  convertStringToData(calendar.get(Calendar.DAY_OF_MONTH).toString() + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR))
+                    binding.tvFecha.setText( formattedDate_.toString())
+                }
+
+                datePicker.show(getParentFragmentManager(), "MyTAG")
+            }
+
+            /*tvFecha.setOnClickListener {
                 val datePickerFragment = DatePickerFragment()
                 val supportFragmentManager = requireActivity().supportFragmentManager
 
@@ -60,7 +82,7 @@ class DatosFragment : Fragment() {
                 }
 
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
-            }
+            }*/
 
             /*
             tvFecha.setOnClickListener {
@@ -107,7 +129,16 @@ class DatosFragment : Fragment() {
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-
+    fun convertStringToData(getDate: String?): Date? {
+        var today: Date?=null
+        val formatter = SimpleDateFormat("dd/MM/yyyy")
+        try {
+            today = formatter.parse(getDate)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return today
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -4,9 +4,9 @@ import androidx.room.Embedded
 import androidx.room.Relation
 
 data class RegionConUsuario(
-    @Embedded val genero: Region,
+    @Embedded val region: Region,
     @Relation(
         parentColumn = "id",
-        entityColumn = "region")
+        entityColumn = "idRegion")
     val regiones: List<Usuario>
 )
