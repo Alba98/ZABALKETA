@@ -2,6 +2,9 @@ package com.example.zabalketa
 
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -44,7 +47,7 @@ class DatosFragment : Fragment() {
         (activity as MainActivity).usuarioVM.mostrarTodasRegiones()
         (activity as MainActivity).usuarioVM.listaRegiones.observe(activity as MainActivity){
             binding.sRegion.adapter = AdaptadorRegion(activity as MainActivity, it)
-            totalDensidades=it.count()
+            totalRegiones=it.count()
         }
 
         (activity as MainActivity).nieblaVM.mostrarTodasDensidades()
@@ -52,6 +55,46 @@ class DatosFragment : Fragment() {
             binding.sDensidad.adapter = AdaptadorDensidad(activity as MainActivity, it)
             totalDensidades=it.count()
         }
+
+        (activity as MainActivity).nieblaVM.mostrarTodasFranjasHorarias()
+        (activity as MainActivity).nieblaVM.listaFranjasHorarias.observe(activity as MainActivity) { franjasHorarias ->
+            val radioGroup = binding.rgFranjasHorarias
+
+            var rowLayout: LinearLayout? = null // Layout para cada fila de RadioButton
+            var count = 0 // Contador para determinar cuándo se deben crear nuevas filas
+
+            for (franjaHoraria in franjasHorarias) {
+                if (count % 2 == 0) {
+                    // Crear un nuevo LinearLayout para cada par de RadioButton
+                    rowLayout = LinearLayout(activity as MainActivity)
+                    rowLayout.orientation = LinearLayout.HORIZONTAL
+
+                    val layoutParams = RadioGroup.LayoutParams(
+                        RadioGroup.LayoutParams.MATCH_PARENT,
+                        RadioGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    radioGroup.addView(rowLayout, layoutParams)
+                }
+
+                val radioButton = RadioButton(activity as MainActivity)
+                radioButton.id = View.generateViewId()
+                radioButton.text = franjaHoraria.franja
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1.0f
+                )
+                layoutParams.marginStart = resources.getDimensionPixelSize(R.dimen.radio_button_margin_start)
+                layoutParams.marginEnd = resources.getDimensionPixelSize(R.dimen.radio_button_margin_end)
+
+                rowLayout?.addView(radioButton, layoutParams)
+
+                count++
+            }
+        }
+
+
 
         binding.apply {
             // Obtener la fecha actual
@@ -80,8 +123,8 @@ class DatosFragment : Fragment() {
                     calendar.timeInMillis = selection
 
                     // Formatear la fecha seleccionada y establecerla en el EditText
-                    val formattedDate = dateFormat.format(calendar.time)
-                    tvFecha.setText(formattedDate)
+                    val formatDate = dateFormat.format(calendar.time)
+                    tvFecha.setText(formatDate)
                 }
 
                 datePicker.show(parentFragmentManager, "MyTAG")
@@ -152,7 +195,7 @@ class DatosFragment : Fragment() {
         var today: Date?=null
         val formatter = SimpleDateFormat("dd/MM/yyyy")
         try {
-            today = formatter.parse(getDate)
+            today = getDate?.let { formatter.parse(it) }
         } catch (e: ParseException) {
             e.printStackTrace()
         }

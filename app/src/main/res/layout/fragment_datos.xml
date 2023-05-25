@@ -52,6 +52,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tNiebla"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Seccion niebla"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
                 <Switch
                     android:id="@+id/bNiebla"
                     android:layout_width="match_parent"
@@ -72,6 +81,7 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <RadioGroup
+                    android:id="@+id/rgFranjasHorarias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="48dp"
@@ -85,37 +95,6 @@
                         android:textStyle="bold"
                         android:textSize="20sp"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rFranja1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:onClick="onRadioButtonClicked"
-                            android:text="9-12" />
-
-                        <RadioButton
-                            android:id="@+id/rFranja2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:onClick="onRadioButtonClicked"
-                            android:text="9-12" />
-
-                        <RadioButton
-                            android:id="@+id/rFranja3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:onClick="onRadioButtonClicked"
-                            android:text="6-9" />
-
-                    </LinearLayout>
-
                 </RadioGroup>
 
             </LinearLayout>
@@ -126,6 +105,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tLluvia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Seccion lluvia"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
 
                 <Switch
                     android:id="@+id/bLluvia"
@@ -155,6 +143,15 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tCorteAgua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Seccion corte agua"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
                 <Switch
                     android:id="@+id/bCorteAgua"
                     android:layout_width="match_parent"
@@ -176,18 +173,34 @@
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/tvDescripcion"
+            <LinearLayout
+                android:id="@+id/lIncidencias"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_margin="48dp"
-                android:gravity="center_vertical"
-                android:hint="Descripcion"
-                android:inputType="number"
-                app:layout_constraintBottom_toTopOf="@id/bInsertar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvGeneroDatos" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tIncidencias"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:text="Seccion incidencias"
+                    android:textStyle="bold"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:id="@+id/tvIncidencias"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="48dp"
+                    android:gravity="center_vertical"
+                    android:hint="Incidencias"
+                    app:layout_constraintBottom_toTopOf="@id/bInsertar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGeneroDatos" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bInsertar"

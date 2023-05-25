@@ -3,47 +3,61 @@ package com.example.zabalketa
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
-class NieblaVM(private val repositorio: Repositorio) : ViewModel() {
-    val datosNieblas:LiveData<List<Niebla>> = repositorio.listaNieblas.asLiveData()
+class NieblaVM(private val miRepositorio: RepositorioNieblas) : ViewModel() {
+    val datosNieblas:LiveData<List<Niebla>> = miRepositorio.listaNieblas.asLiveData()
     lateinit var miNiebla:LiveData<Niebla>
     lateinit var listaDensidades: LiveData<List<Densidad>>
     lateinit var miDensidad: LiveData<Densidad>
-    val datosNieblas2: LiveData<List<NieblaClase>> = repositorio.listaNieblas2.asLiveData()
+    lateinit var listaFranjasHorarias: LiveData<List<FranjaHoraria>>
+    lateinit var miFranjaHoraria: LiveData<FranjaHoraria>
+    val datosNieblas2: LiveData<List<NieblaClase>> = miRepositorio.listaNieblas2.asLiveData()
 
     fun insertarDensidad(miDensidad: Densidad) =viewModelScope.launch{
-        repositorio.insertarDensidad(miDensidad)
+        miRepositorio.insertarDensidad(miDensidad)
     }
 
     fun mostrarTodasDensidades() =viewModelScope.launch {
-        listaDensidades= repositorio.mostrarTodasDensidades().asLiveData()
+        listaDensidades= miRepositorio.mostrarTodasDensidades().asLiveData()
     }
 
     fun buscarDensidadPorId(id:Int) =viewModelScope.launch{
-        miDensidad=repositorio.buscarDensidadPorId(id).asLiveData()
+        miDensidad=miRepositorio.buscarDensidadPorId(id).asLiveData()
+    }
+
+    fun insertarFranjasHoraria(miFranjasHoraria: FranjaHoraria) =viewModelScope.launch{
+        miRepositorio.insertarFranjasHoraria(miFranjasHoraria)
+    }
+
+    fun mostrarTodasFranjasHorarias() =viewModelScope.launch {
+        listaFranjasHorarias= miRepositorio.mostrarTodasFranjasHorarias().asLiveData()
+    }
+
+    fun buscarFranjasHorariaPorId(id:Int) =viewModelScope.launch{
+        miFranjaHoraria=miRepositorio.buscarFranjasHorariaPorId(id).asLiveData()
     }
 
 
     fun Insertar(miNiebla: Niebla) = viewModelScope.launch {
-        repositorio.Insertar(miNiebla)
+        miRepositorio.Insertar(miNiebla)
     }
 
     fun BuscarPorID(id:Int) = viewModelScope.launch  {
-        miNiebla = repositorio.BuscarPorID(id).asLiveData()
+        miNiebla = miRepositorio.BuscarPorID(id).asLiveData()
     }
 
     fun Borrar(miNiebla: Niebla) = viewModelScope.launch  {
-        repositorio.Borrar(miNiebla)
+        miRepositorio.Borrar(miNiebla)
     }
 
     fun Actualizar(miNiebla: Niebla) = viewModelScope.launch  {
-        repositorio.Actualizar(miNiebla)
+        miRepositorio.Actualizar(miNiebla)
     }
 }
-class WordViewModelFactory(private val repositorio: Repositorio): ViewModelProvider.Factory {
+class WordViewModelFactory(private val repositorioNieblas: RepositorioNieblas): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(NieblaVM::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return NieblaVM(repositorio) as T
+            return NieblaVM(repositorioNieblas) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

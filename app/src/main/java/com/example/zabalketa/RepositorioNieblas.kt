@@ -3,7 +3,7 @@ package com.example.zabalketa
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
-class Repositorio(val miDAO: NieblaDAO) {
+class RepositorioNieblas(val miDAO: NieblaDAO) {
     val listaNieblas: Flow<List<Niebla>> = miDAO.MostrarTodas()
     val listaNieblas2: Flow<List<NieblaClase>> = miDAO.MostrarTodasNiebla()
 
@@ -19,6 +19,20 @@ class Repositorio(val miDAO: NieblaDAO) {
 
     fun buscarDensidadPorId(id:Int):Flow<Densidad>{
         return miDAO.buscarDensidadPorId(id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insertarFranjasHoraria(miFranjasHoraria: FranjaHoraria){
+        miDAO.insertarFranjaHoraria(miFranjasHoraria)
+    }
+
+    fun mostrarTodasFranjasHorarias(): Flow<List<FranjaHoraria>>{
+        return miDAO.mostrarTodasFranjasHorarias()
+    }
+
+    fun buscarFranjasHorariaPorId(id:Int):Flow<FranjaHoraria>{
+        return miDAO.buscarFranjasHorariaPorId(id)
     }
 
 

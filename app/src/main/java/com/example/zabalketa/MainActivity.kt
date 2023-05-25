@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     val dataBase by lazy { BaseDatos.getDatabase(this) }
-    val repositorio by lazy {  Repositorio(dataBase.miNieblaDAO()) }
-    val nieblaVM:NieblaVM by viewModels{WordViewModelFactory(repositorio)}
+    val repositorioNieblas by lazy {  RepositorioNieblas(dataBase.miNieblaDAO()) }
+    val nieblaVM:NieblaVM by viewModels{WordViewModelFactory(repositorioNieblas)}
 
     val miRepositorioUsuario by lazy { RepositorioUsuarios(dataBase.miUsuarioDAO()) }
     val usuarioVM:UsuarioVM by viewModels { UsuarioVMFactory(miRepositorioUsuario) }
