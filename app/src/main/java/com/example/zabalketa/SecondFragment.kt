@@ -41,13 +41,6 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //lista de pelicuals es dinamica
-        (activity as MainActivity).nieblaVM.datosNieblas2.observe(activity as MainActivity) {
-            miRecyclerView = binding.rvPosiciones
-            miRecyclerView.layoutManager = LinearLayoutManager(activity)
-            miRecyclerView.adapter=AdaptadorNiebla(it)
-        }
-
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -67,13 +60,18 @@ class SecondFragment : Fragment() {
             }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-
+        //lista de nieblas clase dinamica
+        (activity as MainActivity).nieblaVM.datosNieblas2.observe(activity as MainActivity) {
+            miRecyclerView = binding.rvPosiciones
+            miRecyclerView.layoutManager = LinearLayoutManager(activity)
+            miRecyclerView.adapter=AdaptadorNiebla(it)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        (activity as MainActivity).nieblaVM.datosNieblas.removeObservers(activity as MainActivity)
+        (activity as MainActivity).nieblaVM.datosNieblas2.removeObservers(activity as MainActivity)
     }
 
 }

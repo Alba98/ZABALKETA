@@ -37,19 +37,19 @@ class NieblaVM(private val miRepositorio: RepositorioNieblas) : ViewModel() {
     }
 
 
-    fun Insertar(miNiebla: Niebla) = viewModelScope.launch {
+    fun insertar(miNiebla: Niebla) = viewModelScope.launch {
         miRepositorio.Insertar(miNiebla)
     }
 
-    fun BuscarPorID(id:Int) = viewModelScope.launch  {
+    fun buscarPorID(id:Int) = viewModelScope.launch  {
         miNiebla = miRepositorio.BuscarPorID(id).asLiveData()
     }
 
-    fun Borrar(miNiebla: Niebla) = viewModelScope.launch  {
+    fun borrar(miNiebla: Niebla) = viewModelScope.launch  {
         miRepositorio.Borrar(miNiebla)
     }
 
-    fun Actualizar(miNiebla: Niebla) = viewModelScope.launch  {
+    fun actualizar(miNiebla: Niebla) = viewModelScope.launch  {
         miRepositorio.Actualizar(miNiebla)
     }
 }
@@ -59,6 +59,6 @@ class WordViewModelFactory(private val repositorioNieblas: RepositorioNieblas): 
             @Suppress("UNCHECKED_CAST")
             return NieblaVM(repositorioNieblas) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        throw IllegalArgumentException("ViewModel class desconocida")
     }
 }

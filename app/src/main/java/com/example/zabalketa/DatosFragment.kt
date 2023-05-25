@@ -7,6 +7,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.Switch
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -192,12 +193,17 @@ class DatosFragment : Fragment() {
             binding.bModificar.isEnabled=true
             binding.bInsertar.isEnabled=false
 
-            (activity as MainActivity).nieblaVM.BuscarPorID(idNiebla)
-            (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity){ niebla->
-                miNiebla=niebla
-               // binding.tvTituloDatos.setText(niebla.titulo)
+            (activity as MainActivity).nieblaVM.buscarPorID(idNiebla)
+            (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity) { niebla ->
+                miNiebla = niebla
+                binding.tvFecha.setText(niebla.fecha)
+                binding.bNiebla.isChecked = niebla.hayNiebla
                 setearSpiner(niebla.idDensidad)
-                // binding.tvEstrenoDatos.setText(niebla.estreno.toString())
+                binding.bLluvia.isChecked = niebla.hayLluvia
+                binding.sbDuracionLluvia.progress = niebla.duracionLluvia
+                binding.bCorteAgua.isChecked = niebla.hayCorteAgua
+                binding.sbDuracionCorte.progress = niebla.duracionCorteAgua
+                binding.tvIncidencias.setText(niebla.incidencia)
             }
         }
 
@@ -206,13 +212,24 @@ class DatosFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Add menu items here
                 menuInflater.inflate(R.menu.menu_edit, menu)
+                // Add menu items here
+                if (idNiebla==-1) menuInflater.inflate(R.menu.menu_insert,menu)
+                else menuInflater.inflate(R.menu.menu_edit, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
+                    R.id.miGuardar -> {
+                        if(validarContenido()) guardar()
+                        true
+                    }
                     R.id.miModificar -> {
-                        findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
+                        if(validarContenido()) modificar(idNiebla)
+                        true
+                    }
+                    R.id.miBorrar -> {
+                        borrar(miNiebla)
                         true
                     }
                     else -> false
@@ -244,6 +261,64 @@ class DatosFragment : Fragment() {
         }
     }
 
+    fun guardar(){
+        (activity as MainActivity).nieblaVM.insertar(Niebla(
+            fecha = binding.tvFecha.text.toString(),
+            idUsuario = 1,
+            hayNiebla = binding.bNiebla.isChecked,
+            idDensidad = binding.sDensidad.selectedItemId.toInt(),
+            idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
+            hayLluvia = binding.bLluvia.isChecked,
+            duracionLluvia = binding.sbDuracionLluvia.progress,
+            hayCorteAgua = binding.bCorteAgua.isChecked,
+            duracionCorteAgua = binding.sbDuracionCorte.progress,
+            incidencia = binding.tvIncidencias.text.toString()
+        ))
+        Toast.makeText(activity,"Pelicula insertada", Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
+
+    }
+
+    fun modificar(idPelicula: Int){
+        (activity as MainActivity).nieblaVM.actualizar(Niebla(
+            idPelicula,
+            fecha = binding.tvFecha.text.toString(),
+            idUsuario = 1,
+            hayNiebla = binding.bNiebla.isChecked,
+            idDensidad = binding.sDensidad.selectedItemId.toInt(),
+            idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
+            hayLluvia = binding.bLluvia.isChecked,
+            duracionLluvia = binding.sbDuracionLluvia.progress,
+            hayCorteAgua = binding.bCorteAgua.isChecked,
+            duracionCorteAgua = binding.sbDuracionCorte.progress,
+            incidencia = binding.tvIncidencias.text.toString()
+        ))
+        Toast.makeText(activity,"Pelicula modificada", Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
+    }
+
+    fun borrar(miNiebla:Niebla){
+        (activity as MainActivity).nieblaVM.borrar(miNiebla)
+        Toast.makeText(activity,"Pelicula eliminada", Toast.LENGTH_LONG).show()
+        findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
+    }
+
+    fun validarContenido():Boolean{
+        // if (binding.tvFecha.text.isEmpty() || binding.sRegion.selectedItemPosition == 0) {
+        //     Toast.makeText(activity, "Debe seleccionar una fecha y una región", Toast.LENGTH_LONG).show()
+        //     return false
+        // }
+
+        // val fechaSeleccionada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(binding.tvFecha.text.toString())
+        // val fechaHoy = Calendar.getInstance().time
+        //
+        // if (fechaSeleccionada != null && fechaSeleccionada.before(fechaHoy)) {
+        //     Toast.makeText(activity, "La fecha seleccionada debe ser igual o posterior a hoy", Toast.LENGTH_LONG).show()
+        //     return false
+        // }
+
+        return true
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

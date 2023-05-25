@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-@Database(entities = arrayOf(Usuario::class,Region::class, Niebla::class, Densidad::class, FranjaHoraria::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Usuario::class, Region::class, Niebla::class, Densidad::class, FranjaHoraria::class), version = 1, exportSchema = false)
 abstract class BaseDatos:RoomDatabase() {
     abstract fun miUsuarioDAO():UsuarioDAO
     abstract fun miNieblaDAO():NieblaDAO
