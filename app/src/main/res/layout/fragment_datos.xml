@@ -78,7 +78,8 @@
                     android:spinnerMode="dropdown"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:visibility="gone"/>
 
                 <RadioGroup
                     android:id="@+id/rgFranjasHorarias"
@@ -86,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="48dp"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="match_parent"
@@ -132,7 +134,8 @@
                     android:gravity="center_vertical"
                     android:min="0"
                     android:max="24"
-                    android:progress="7"/>
+                    android:progress="7"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -169,7 +172,8 @@
                     android:gravity="center_vertical"
                     android:max="24"
                     android:min="0"
-                    android:progress="7" />
+                    android:progress="0"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

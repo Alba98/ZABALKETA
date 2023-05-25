@@ -5,6 +5,8 @@ import android.view.*
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.SeekBar
+import android.widget.Switch
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -95,7 +97,6 @@ class DatosFragment : Fragment() {
         }
 
 
-
         binding.apply {
             // Obtener la fecha actual
             val currentDate = Calendar.getInstance()
@@ -148,7 +149,36 @@ class DatosFragment : Fragment() {
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }*/
 
+            bNiebla.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    sDensidad.visibility = View.VISIBLE
+                    rgFranjasHorarias.visibility = View.VISIBLE
+                } else {
+                    sDensidad.visibility = View.GONE
+                    rgFranjasHorarias.visibility = View.GONE
+                }
+            }
+
+            bLluvia.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    sbDuracionLluvia.visibility = View.VISIBLE
+                } else {
+                    sbDuracionLluvia.visibility = View.GONE
+                }
+            }
+
+            bCorteAgua.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    sbDuracionCorte.visibility = View.VISIBLE
+                } else {
+                    sbDuracionCorte.visibility = View.GONE
+                }
+            }
+
         }
+
+
+
 
         idNiebla=arguments?.getInt("id") ?:-1
         var miNiebla = Niebla()
@@ -170,7 +200,7 @@ class DatosFragment : Fragment() {
                 // binding.tvEstrenoDatos.setText(niebla.estreno.toString())
             }
         }
-        
+
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
