@@ -12,7 +12,7 @@ data class Niebla(
     @NotNull @ColumnInfo (name = "fecha")
     var fecha: String = "",
     @NotNull @ColumnInfo (name = "idRegion")
-    var idRegion: String = "",
+    var idRegion: Int = 0,
     @NotNull @ColumnInfo (name = "idDensidad")
-    var idDensidad: String = "",
+    var idDensidad: Int = 0,
 ) {}

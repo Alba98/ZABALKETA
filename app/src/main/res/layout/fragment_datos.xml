@@ -34,6 +34,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <Spinner
+                android:id="@+id/sRegion"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_margin="48dp"
+                android:gravity="center_vertical"
+                android:spinnerMode="dropdown"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
             <LinearLayout
                 android:id="@+id/lNiebla"
@@ -50,7 +61,7 @@
                     android:text="¿Hay niebla?" />
 
                 <Spinner
-                    android:id="@+id/sFranja"
+                    android:id="@+id/sDensidad"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_margin="48dp"

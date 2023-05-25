@@ -5,15 +5,30 @@ import kotlinx.coroutines.launch
 
 class NieblaVM(private val repositorio: Repositorio) : ViewModel() {
     val datosNieblas:LiveData<List<Niebla>> = repositorio.listaNieblas.asLiveData()
-    lateinit var Niebla:LiveData<Niebla>
+    lateinit var miNiebla:LiveData<Niebla>
+    lateinit var listaDensidades: LiveData<List<Densidad>>
+    lateinit var miDensidad: LiveData<Densidad>
     val datosNieblas2: LiveData<List<NieblaClase>> = repositorio.listaNieblas2.asLiveData()
+
+    fun insertarDensidad(miDensidad: Densidad) =viewModelScope.launch{
+        repositorio.insertarDensidad(miDensidad)
+    }
+
+    fun mostrarTodasDensidades() =viewModelScope.launch {
+        listaDensidades= repositorio.mostrarTodasDensidades().asLiveData()
+    }
+
+    fun buscarDensidadPorId(id:Int) =viewModelScope.launch{
+        miDensidad=repositorio.buscarDensidadPorId(id).asLiveData()
+    }
+
 
     fun Insertar(miNiebla: Niebla) = viewModelScope.launch {
         repositorio.Insertar(miNiebla)
     }
 
     fun BuscarPorID(id:Int) = viewModelScope.launch  {
-        Niebla = repositorio.BuscarPorID(id).asLiveData()
+        miNiebla = repositorio.BuscarPorID(id).asLiveData()
     }
 
     fun Borrar(miNiebla: Niebla) = viewModelScope.launch  {

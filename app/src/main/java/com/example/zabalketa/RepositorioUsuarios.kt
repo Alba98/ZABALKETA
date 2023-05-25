@@ -14,7 +14,7 @@ class RepositorioUsuarios (val miDAO: UsuarioDAO) {
         miDAO.insertarRegion(miRegion)
     }
 
-    fun mostrarTodosRegions(): Flow<List<Region>>{
+    fun mostrarTodasRegiones(): Flow<List<Region>>{
         return miDAO.mostrarTodasRegiones()
     }
 

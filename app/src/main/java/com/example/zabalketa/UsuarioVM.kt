@@ -1,9 +1,6 @@
 package com.example.zabalketa
 
 import androidx.lifecycle.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -11,7 +8,7 @@ class UsuarioVM(private val miRepositorio: RepositorioUsuarios): ViewModel() {
     val listaUsuarios: LiveData<List<Usuario>> = miRepositorio.listaUsuarios.asLiveData()
     lateinit var miUsuario: LiveData<Usuario>
   //  lateinit var miUsuarioClase: LiveData<UsuarioClase>
-    lateinit var listaRegions: LiveData<List<Region>>
+    lateinit var listaRegiones: LiveData<List<Region>>
     lateinit var miRegion: LiveData<Region>
     val listaUsuarios2: LiveData<List<UsuarioClase>> = miRepositorio.listaUsuarios2.asLiveData()
 
@@ -20,8 +17,8 @@ class UsuarioVM(private val miRepositorio: RepositorioUsuarios): ViewModel() {
         miRepositorio.insertarRegion(miRegion)
     }
 
-    fun mostrarTodosRegions() =viewModelScope.launch {
-        listaRegions= miRepositorio.mostrarTodosRegions().asLiveData()
+    fun mostrarTodasRegiones() =viewModelScope.launch {
+        listaRegiones= miRepositorio.mostrarTodasRegiones().asLiveData()
     }
 
     fun buscarRegionPorId(id:Int) =viewModelScope.launch{

@@ -32,12 +32,11 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       (activity as MainActivity).UsuarioVM.insertar(Usuario(username = "adm", clave = "admin", idRegion = "9"))
+       //(activity as MainActivity).UsuarioVM.insertar(Usuario(username = "adm", clave = "admin", idRegion = "9"))
         var miUsuario = Usuario()
         binding.loginbtn.setOnClickListener {
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-
-
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            /*
             (activity as MainActivity).UsuarioVM.buscarPorUsername(
                 binding.username.text.toString()
             )
@@ -51,7 +50,7 @@ class FirstFragment : Fragment() {
                     findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                 }
             }
-
+            */
         }
     }
 

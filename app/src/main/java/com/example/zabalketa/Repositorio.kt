@@ -3,30 +3,45 @@ package com.example.zabalketa
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 
-class Repositorio(val miDao: NieblaDAO) {
-    val listaNieblas: Flow<List<Niebla>> = miDao.MostrarTodas()
-    val listaNieblas2: Flow<List<NieblaClase>> = miDao.MostrarTodasNiebla()
+class Repositorio(val miDAO: NieblaDAO) {
+    val listaNieblas: Flow<List<Niebla>> = miDAO.MostrarTodas()
+    val listaNieblas2: Flow<List<NieblaClase>> = miDAO.MostrarTodasNiebla()
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insertarDensidad(miDensidad: Densidad){
+        miDAO.insertarDensidad(miDensidad)
+    }
+
+    fun mostrarTodasDensidades(): Flow<List<Densidad>>{
+        return miDAO.mostrarTodasDensidades()
+    }
+
+    fun buscarDensidadPorId(id:Int):Flow<Densidad>{
+        return miDAO.buscarDensidadPorId(id)
+    }
+
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun Insertar(miNiebla: Niebla) {
-        miDao.Insertar(miNiebla)
+        miDAO.Insertar(miNiebla)
     }
 
     fun BuscarPorID(id:Int): Flow<Niebla> {
-        return miDao.BuscarPorID(id)
+        return miDAO.BuscarPorID(id)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun Borrar(miNiebla: Niebla) {
-        miDao.Borrar(miNiebla)
+        miDAO.Borrar(miNiebla)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun Actualizar(miNiebla: Niebla) {
-        miDao.Actualizar(miNiebla)
+        miDAO.Actualizar(miNiebla)
     }
 
 }

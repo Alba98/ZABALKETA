@@ -1,15 +1,15 @@
 package com.example.zabalketa
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.zabalketa.databinding.FragmentDatosBinding
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -20,6 +20,10 @@ import java.util.TimeZone
 
 class DatosFragment : Fragment() {
     private var _binding: FragmentDatosBinding? = null
+
+    var idNiebla:Int=-1
+    var totalDensidades:Int=-1
+    var totalRegiones:Int=-1
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,33 +41,50 @@ class DatosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("fragmentoDatos", "ha llegado a dATOS")
+        (activity as MainActivity).usuarioVM.mostrarTodasRegiones()
+        (activity as MainActivity).usuarioVM.listaRegiones.observe(activity as MainActivity){
+            binding.sRegion.adapter = AdaptadorRegion(activity as MainActivity, it)
+            totalDensidades=it.count()
+        }
+
+        (activity as MainActivity).nieblaVM.mostrarTodasDensidades()
+        (activity as MainActivity).nieblaVM.listaDensidades.observe(activity as MainActivity){
+            binding.sDensidad.adapter = AdaptadorDensidad(activity as MainActivity, it)
+            totalDensidades=it.count()
+        }
 
         binding.apply {
             // Obtener la fecha actual
             val currentDate = Calendar.getInstance()
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val formattedDate = dateFormat.format(currentDate.time)
-            var formattedDate_ : Date?= null
 
             // Establecer la fecha actual en el EditText
             tvFecha.setText(formattedDate)
 
-            binding.tvFecha.setOnClickListener {
-                // Create the date picker builder and set the title
+            tvFecha.setOnClickListener {
+                // Obtener el rango de fechas permitido (hasta la fecha actual)
+                val currentTimestamp = currentDate.timeInMillis
+                val constraintsBuilder = CalendarConstraints.Builder()
+                    .setValidator(DateValidatorPointBackward.before(currentTimestamp))
+
+                // Crear el selector de fechas y aplicar las restricciones
                 val builder = MaterialDatePicker.Builder.datePicker()
-                // create the date picker
+                    .setCalendarConstraints(constraintsBuilder.build())
                 val datePicker = builder.build()
-                // set listener when date is selected
-                datePicker.addOnPositiveButtonClickListener {
-                    // Create calendar object and set the date to be that returned from selection
+
+                // Establecer el listener cuando se selecciona una fecha
+                datePicker.addOnPositiveButtonClickListener { selection ->
+                    // Crear objeto Calendar y establecer la fecha seleccionada
                     val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-                    calendar.time = Date(it)
-                    formattedDate_ =  convertStringToData(calendar.get(Calendar.DAY_OF_MONTH).toString() + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.YEAR))
-                    binding.tvFecha.setText( formattedDate_.toString())
+                    calendar.timeInMillis = selection
+
+                    // Formatear la fecha seleccionada y establecerla en el EditText
+                    val formattedDate = dateFormat.format(calendar.time)
+                    tvFecha.setText(formattedDate)
                 }
 
-                datePicker.show(getParentFragmentManager(), "MyTAG")
+                datePicker.show(parentFragmentManager, "MyTAG")
             }
 
             /*tvFecha.setOnClickListener {
@@ -84,31 +105,29 @@ class DatosFragment : Fragment() {
                 datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
             }*/
 
-            /*
-            tvFecha.setOnClickListener {
-                // create new instance of DatePickerFragment
-                val datePickerFragment = DatePickerFragment()
-                val supportFragmentManager = requireActivity().supportFragmentManager
-
-                // we have to implement setFragmentResultListener
-                supportFragmentManager.setFragmentResultListener(
-                    "REQUEST_KEY",
-                    viewLifecycleOwner
-                ) { resultKey, bundle ->
-                    if (resultKey == "REQUEST_KEY") {
-                        val date = bundle.getString("SELECTED_DATE")
-                        // tvFecha.text = date
-                        tvFecha.setText(date)
-                    }
-                }
-
-                // show
-                datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
-            }
-             */
         }
 
+        idNiebla=arguments?.getInt("id") ?:-1
+        var miNiebla = Niebla()
+        if(idNiebla==-1){
+            binding.bBorrar.isEnabled=false
+            binding.bModificar.isEnabled=false
+            binding.bInsertar.isEnabled=true
+        }
+        else{
+            binding.bBorrar.isEnabled=true
+            binding.bModificar.isEnabled=true
+            binding.bInsertar.isEnabled=false
 
+            (activity as MainActivity).nieblaVM.BuscarPorID(idNiebla)
+            (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity){ niebla->
+                miNiebla=niebla
+               // binding.tvTituloDatos.setText(niebla.titulo)
+                setearSpiner(niebla.idDensidad)
+                // binding.tvEstrenoDatos.setText(niebla.estreno.toString())
+            }
+        }
+        
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -139,18 +158,21 @@ class DatosFragment : Fragment() {
         }
         return today
     }
+
+    fun setearSpiner(idDensidad:Int){
+        if(totalDensidades!=-1){
+            for (i in 0 until totalDensidades) {
+                val option = binding.sDensidad.adapter.getItemId(i).toInt()
+                if (option == idDensidad) {
+                    binding.sDensidad.setSelection(i)
+                    break
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-/*
-    private fun showDatePickerDialog() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
-        datePicker.show(FragmentDatosBinding, "datePicker")
-    }
-
-    private fun onDateSelected(day: Int, month: Int, year: Int) {
-        //tvFecha.setText("Has seleccionado el $day del $month del año $year")
-    }
-    */
 }

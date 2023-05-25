@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
 
     val dataBase by lazy { BaseDatos.getDatabase(this) }
     val repositorio by lazy {  Repositorio(dataBase.miNieblaDAO()) }
-    val nieblasVM:NieblaVM by viewModels{WordViewModelFactory(repositorio)}
+    val nieblaVM:NieblaVM by viewModels{WordViewModelFactory(repositorio)}
 
     val miRepositorioUsuario by lazy { RepositorioUsuarios(dataBase.miUsuarioDAO()) }
-    val UsuarioVM:UsuarioVM by viewModels { UsuarioVMFactory(miRepositorioUsuario) }
+    val usuarioVM:UsuarioVM by viewModels { UsuarioVMFactory(miRepositorioUsuario) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)

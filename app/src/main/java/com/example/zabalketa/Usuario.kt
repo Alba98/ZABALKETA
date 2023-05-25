@@ -14,5 +14,5 @@ data class Usuario(
     @NotNull @ColumnInfo (name = "clave")
     var clave: String = "",
     @NotNull @ColumnInfo (name = "idRegion")
-    var idRegion: String = "",
+    var idRegion: Int = 0,
 ) {}
