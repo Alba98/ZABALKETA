@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:background="@color/purple_200">
 
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/tvDescripcion"
-        android:layout_width="59dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:text="TextView"
         android:layout_marginTop="10dp"
@@ -54,7 +54,7 @@
 
     <TextView
         android:id="@+id/tvIncidencias"
-        android:layout_width="59dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:text="TextView"
         android:layout_marginTop="10dp"
@@ -75,18 +75,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
         app:layout_constraintVertical_bias="1.0">
-
-        <Button
-            android:id="@+id/bEditar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Editar" />
-
-        <Button
-            android:id="@+id/bBorrar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Borrar" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -41,11 +41,12 @@ class DatosFragment : Fragment() {
     ): View? {
         _binding = FragmentDatosBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        idNiebla = arguments?.getInt("id") ?:-1
 
         (activity as MainActivity).usuarioVM.mostrarTodasRegiones()
         (activity as MainActivity).usuarioVM.listaRegiones.observe(activity as MainActivity){
@@ -178,9 +179,6 @@ class DatosFragment : Fragment() {
 
         }
 
-
-
-
         idNiebla=arguments?.getInt("id") ?:-1
         var miNiebla = Niebla()
         if(idNiebla==-1){
@@ -197,8 +195,9 @@ class DatosFragment : Fragment() {
             (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity) { niebla ->
                 miNiebla = niebla
                 binding.tvFecha.setText(niebla.fecha)
+                //setearSpinerRegion(niebla.idRegion)
                 binding.bNiebla.isChecked = niebla.hayNiebla
-                setearSpiner(niebla.idDensidad)
+                setearSpinerDensidad(niebla.idDensidad)
                 binding.bLluvia.isChecked = niebla.hayLluvia
                 binding.sbDuracionLluvia.progress = niebla.duracionLluvia
                 binding.bCorteAgua.isChecked = niebla.hayCorteAgua
@@ -210,8 +209,6 @@ class DatosFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Add menu items here
-                menuInflater.inflate(R.menu.menu_edit, menu)
                 // Add menu items here
                 if (idNiebla==-1) menuInflater.inflate(R.menu.menu_insert,menu)
                 else menuInflater.inflate(R.menu.menu_edit, menu)
@@ -249,7 +246,7 @@ class DatosFragment : Fragment() {
         return today
     }
 
-    fun setearSpiner(idDensidad:Int){
+    fun setearSpinerDensidad(idDensidad:Int){
         if(totalDensidades!=-1){
             for (i in 0 until totalDensidades) {
                 val option = binding.sDensidad.adapter.getItemId(i).toInt()

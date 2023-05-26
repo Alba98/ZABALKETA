@@ -32,25 +32,25 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       //(activity as MainActivity).UsuarioVM.insertar(Usuario(username = "adm", clave = "admin", idRegion = "9"))
         var miUsuario = Usuario()
         binding.loginbtn.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            /*
-            (activity as MainActivity).UsuarioVM.buscarPorUsername(
+           // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            (activity as MainActivity).usuarioVM.buscarPorUsername(
                 binding.username.text.toString()
             )
-            (activity as MainActivity).UsuarioVM.miUsuario.observe(activity as MainActivity){
+            (activity as MainActivity).usuarioVM.miUsuario.observe(activity as MainActivity){
                     it?.let{
                         miUsuario=it
-                        Toast.makeText(activity, miUsuario.toString(), Toast.LENGTH_LONG).show()
+                        // Toast.makeText(activity, miUsuario.toString(), Toast.LENGTH_LONG).show()
+                        if(miUsuario.clave ==  binding.password.text.toString()) {
+                            Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
+                            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                        } else
+                            Toast.makeText(activity, "clave incorrecta", Toast.LENGTH_LONG).show()
                     } ?: Toast.makeText(activity, "usuario igual a null", Toast.LENGTH_LONG).show()
-                if(miUsuario.clave ==  binding.password.text.toString()) {
-                    Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
-                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-                }
+
             }
-            */
+
         }
     }
 
