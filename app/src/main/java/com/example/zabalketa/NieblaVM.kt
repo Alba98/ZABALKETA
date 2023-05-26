@@ -4,13 +4,13 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 
 class NieblaVM(private val miRepositorio: RepositorioNieblas) : ViewModel() {
-    val datosNieblas:LiveData<List<Niebla>> = miRepositorio.listaNieblas.asLiveData()
+    var datosNieblas:LiveData<List<Niebla>> = miRepositorio.listaNieblas.asLiveData()
     lateinit var miNiebla:LiveData<Niebla>
     lateinit var listaDensidades: LiveData<List<Densidad>>
     lateinit var miDensidad: LiveData<Densidad>
     lateinit var listaFranjasHorarias: LiveData<List<FranjaHoraria>>
     lateinit var miFranjaHoraria: LiveData<FranjaHoraria>
-    val datosNieblas2: LiveData<List<NieblaClase>> = miRepositorio.listaNieblas2.asLiveData()
+    var datosNieblas2: LiveData<List<NieblaClase>> = miRepositorio.listaNieblas2.asLiveData()
 
     fun insertarDensidad(miDensidad: Densidad) =viewModelScope.launch{
         miRepositorio.insertarDensidad(miDensidad)
@@ -36,7 +36,12 @@ class NieblaVM(private val miRepositorio: RepositorioNieblas) : ViewModel() {
         miFranjaHoraria=miRepositorio.buscarFranjasHorariaPorId(id).asLiveData()
     }
 
-
+    fun mostrarTodasNieblas() =viewModelScope.launch {
+        datosNieblas2= miRepositorio.mostrarTodasNieblas().asLiveData()
+    }
+    fun mostrarTodas() =viewModelScope.launch {
+        datosNieblas= miRepositorio.mostrarTodas().asLiveData()
+    }
     fun insertar(miNiebla: Niebla) = viewModelScope.launch {
         miRepositorio.Insertar(miNiebla)
     }

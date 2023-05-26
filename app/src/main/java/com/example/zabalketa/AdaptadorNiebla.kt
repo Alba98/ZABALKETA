@@ -12,12 +12,17 @@ class AdaptadorNiebla(val Nieblas: List<NieblaClase>) : RecyclerView.Adapter<Ada
     inner class ViewHolder (v: View): RecyclerView.ViewHolder(v){
         var tvFecha: TextView
         var tvRegion: TextView
-        var tvDescripcion: TextView
+        var tvUsername: TextView
+        var tvDescripcion : TextView
+        var tvIncidencias : TextView
         var id:Int=-1
         init{
             tvFecha=v.findViewById(R.id.tvFecha)
             tvRegion=v.findViewById(R.id.tvRegion)
+            tvUsername=v.findViewById(R.id.tvUsername)
             tvDescripcion=v.findViewById(R.id.tvDescripcion)
+            tvIncidencias=v.findViewById(R.id.tvIncidencias)
+
             v.setOnClickListener{
                 val bundle= bundleOf("id" to id)
                 v.findNavController().navigate(R.id.action_SecondFragment_to_datosFragment, bundle)
@@ -31,9 +36,11 @@ class AdaptadorNiebla(val Nieblas: List<NieblaClase>) : RecyclerView.Adapter<Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvFecha.text="FECHA: ${Nieblas[position].fecha}"
-        holder.tvRegion.text="REGION: ${Nieblas[position].region}"
-        holder.tvDescripcion.text="${Nieblas[position].densidad}"
+        holder.tvFecha.text= "${Nieblas[position].fecha}"
+        holder.tvRegion.text="${Nieblas[position].region}"
+        holder.tvUsername.text="${Nieblas[position].username}"
+        holder.tvIncidencias.text ="${Nieblas[position].incidencia}"
+        holder.tvDescripcion.text="hayNiebla: ${Nieblas[position].hayNiebla} + " + "hayLluvia: ${Nieblas[position].hayLluvia} +" +  "hayCorteAgua: ${Nieblas[position].hayCorteAgua}"
         holder.id=Nieblas[position].id
     }
 

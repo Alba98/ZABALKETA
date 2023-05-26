@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 class RepositorioNieblas(val miDAO: NieblaDAO) {
     val listaNieblas: Flow<List<Niebla>> = miDAO.MostrarTodas()
-    val listaNieblas2: Flow<List<NieblaClase>> = miDAO.MostrarTodasNiebla()
+    val listaNieblas2: Flow<List<NieblaClase>> = miDAO.MostrarTodasNieblas()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -56,6 +56,14 @@ class RepositorioNieblas(val miDAO: NieblaDAO) {
     @WorkerThread
     suspend fun Actualizar(miNiebla: Niebla) {
         miDAO.Actualizar(miNiebla)
+    }
+
+    fun mostrarTodasNieblas(): Flow<List<NieblaClase>> {
+        return miDAO.MostrarTodasNieblas()
+    }
+
+    fun mostrarTodas(): Flow<List<Niebla>> {
+        return miDAO.MostrarTodas()
     }
 
 }

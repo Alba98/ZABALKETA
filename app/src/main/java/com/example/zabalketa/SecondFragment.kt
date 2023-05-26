@@ -1,6 +1,7 @@
 package com.example.zabalketa
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
@@ -60,12 +62,21 @@ class SecondFragment : Fragment() {
             }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
 
+        (activity as MainActivity).nieblaVM.mostrarTodasNieblas()
+
         //lista de nieblas clase dinamica
         (activity as MainActivity).nieblaVM.datosNieblas2.observe(activity as MainActivity) {
-            miRecyclerView = binding.rvPosiciones
-            miRecyclerView.layoutManager = LinearLayoutManager(activity)
-            miRecyclerView.adapter=AdaptadorNiebla(it)
+            niebla ->
+            niebla?.let { miRecyclerView = binding.rvPosiciones
+                miRecyclerView.layoutManager = LinearLayoutManager(activity)
+                miRecyclerView.adapter=AdaptadorNiebla(it)
+                //Toast.makeText(activity, it.count(), Toast.LENGTH_LONG).show()
+                Log.d("nieblas",it.count().toString())
+                } ?: Toast.makeText(activity,"es null", Toast.LENGTH_LONG).show()
+
         }
+
+        //Toast.makeText(activity, (activity as MainActivity).nieblaVM.datosNieblas2.value.size, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

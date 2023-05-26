@@ -274,14 +274,14 @@ class DatosFragment : Fragment() {
             duracionCorteAgua = binding.sbDuracionCorte.progress,
             incidencia = binding.tvIncidencias.text.toString()
         ))
-        Toast.makeText(activity,"Pelicula insertada", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity,"Niebla insertada", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
 
     }
 
-    fun modificar(idPelicula: Int){
+    fun modificar(idNiebla: Int){
         (activity as MainActivity).nieblaVM.actualizar(Niebla(
-            idPelicula,
+            idNiebla,
             fecha = binding.tvFecha.text.toString(),
             idUsuario = 1,
             hayNiebla = binding.bNiebla.isChecked,
@@ -293,13 +293,13 @@ class DatosFragment : Fragment() {
             duracionCorteAgua = binding.sbDuracionCorte.progress,
             incidencia = binding.tvIncidencias.text.toString()
         ))
-        Toast.makeText(activity,"Pelicula modificada", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity,"Niebla modificada", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
     }
 
     fun borrar(miNiebla:Niebla){
         (activity as MainActivity).nieblaVM.borrar(miNiebla)
-        Toast.makeText(activity,"Pelicula eliminada", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity,"Niebla eliminada", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
     }
 
