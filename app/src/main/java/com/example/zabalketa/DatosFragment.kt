@@ -1,5 +1,6 @@
 package com.example.zabalketa
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
@@ -133,24 +134,6 @@ class DatosFragment : Fragment() {
                 datePicker.show(parentFragmentManager, "MyTAG")
             }
 
-            /*tvFecha.setOnClickListener {
-                val datePickerFragment = DatePickerFragment()
-                val supportFragmentManager = requireActivity().supportFragmentManager
-
-                supportFragmentManager.setFragmentResultListener(
-                    "REQUEST_KEY",
-                    viewLifecycleOwner
-                ) { resultKey, bundle ->
-                    if (resultKey == "REQUEST_KEY") {
-                        val date = bundle.getString("SELECTED_DATE")
-                        tvFecha.setText(date) // Actualiza el texto del EditText con la fecha seleccionada
-                        Toast.makeText(activity,"Actualizar fecha", Toast.LENGTH_LONG).show()
-                    }
-                }
-
-                datePickerFragment.show(supportFragmentManager, "DatePickerFragment")
-            }*/
-
             bNiebla.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     sDensidad.visibility = View.VISIBLE
@@ -185,6 +168,15 @@ class DatosFragment : Fragment() {
             binding.bBorrar.isEnabled=false
             binding.bModificar.isEnabled=false
             binding.bInsertar.isEnabled=true
+
+            //pillar del shared Preferences
+            val preferences = (activity as MainActivity)
+                .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+            if(preferences.getInt( "isUsuario", -1) != -1) {
+                (activity as MainActivity).usuarioVM.buscarPorId(preferences.getInt( "isUsuario", -1))
+                (activity as MainActivity).usuarioVM.miUsuario.value?.let { setearSpinerRegion(it.idRegion) }
+            }
+
         }
         else{
             binding.bBorrar.isEnabled=true
@@ -195,7 +187,8 @@ class DatosFragment : Fragment() {
             (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity) { niebla ->
                 miNiebla = niebla
                 binding.tvFecha.setText(niebla.fecha)
-                //setearSpinerRegion(niebla.idRegion)
+                (activity as MainActivity).usuarioVM.buscarPorId(niebla.idUsuario)
+                (activity as MainActivity).usuarioVM.miUsuario.value?.let { setearSpinerRegion(it.idRegion) }
                 binding.bNiebla.isChecked = niebla.hayNiebla
                 setearSpinerDensidad(niebla.idDensidad)
                 binding.bLluvia.isChecked = niebla.hayLluvia
@@ -257,6 +250,19 @@ class DatosFragment : Fragment() {
             }
         }
     }
+
+    private fun setearSpinerRegion(idRegion: Int) {
+        if(totalRegiones!=-1){
+            for (i in 0 until totalRegiones) {
+                val option = binding.sRegion.adapter.getItemId(i).toInt()
+                if (option == idRegion) {
+                    binding.sDensidad.setSelection(i)
+                    break
+                }
+            }
+        }
+    }
+
 
     fun guardar(){
         (activity as MainActivity).nieblaVM.insertar(Niebla(

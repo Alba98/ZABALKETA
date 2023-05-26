@@ -37,13 +37,14 @@ class UsuarioVM(private val miRepositorio: RepositorioUsuarios): ViewModel() {
         miRepositorio.modificar(miUsuario)
     }
 
-    fun buscarPorId(id:Int) =viewModelScope.launch{
+    fun buscarPorId(id:Int) = viewModelScope.launch{
         miUsuario=miRepositorio.buscarPorId(id).asLiveData()
     }
 
     fun buscarPorUsername(username:String) =viewModelScope.launch{
         miUsuario=miRepositorio.buscarPorUsername(username).asLiveData()
     }
+
 }
 class UsuarioVMFactory(private val miRepositorio: RepositorioUsuarios):ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

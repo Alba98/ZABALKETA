@@ -1,13 +1,15 @@
 package com.example.zabalketa
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.zabalketa.databinding.FragmentFirstBinding
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -33,6 +35,11 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var miUsuario = Usuario()
+        val preferences = (activity as MainActivity)
+            .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        if(preferences.getInt( "isUsuario", -1) != -1) {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
         binding.loginbtn.setOnClickListener {
            // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             (activity as MainActivity).usuarioVM.buscarPorUsername(
@@ -44,6 +51,12 @@ class FirstFragment : Fragment() {
                         // Toast.makeText(activity, miUsuario.toString(), Toast.LENGTH_LONG).show()
                         if(miUsuario.clave ==  binding.password.text.toString()) {
                             Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
+                            //guardar en SharedPreferences usuario
+                            val myEdit = preferences.edit()
+                            // write all the data entered by the user in SharedPreference and apply
+                            myEdit.putInt("isUsuario", miUsuario.id)
+                            myEdit.apply()
+
                             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                         } else
                             Toast.makeText(activity, "clave incorrecta", Toast.LENGTH_LONG).show()

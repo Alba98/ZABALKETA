@@ -41,6 +41,7 @@
                 android:layout_margin="48dp"
                 android:gravity="center_vertical"
                 android:spinnerMode="dropdown"
+                android:focusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

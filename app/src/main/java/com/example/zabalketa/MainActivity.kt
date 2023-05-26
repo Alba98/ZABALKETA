@@ -1,17 +1,20 @@
 package com.example.zabalketa
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
-import androidx.activity.viewModels
 import com.example.zabalketa.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +27,10 @@ class MainActivity : AppCompatActivity() {
 
     val miRepositorioUsuario by lazy { RepositorioUsuarios(dataBase.miUsuarioDAO()) }
     val usuarioVM:UsuarioVM by viewModels { UsuarioVMFactory(miRepositorioUsuario) }
+
+    var sharedpreferences: SharedPreferences? = null
+    val mypreference = "usuario"
+    val userID = "userID_Key"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -43,6 +50,8 @@ class MainActivity : AppCompatActivity() {
                 .setAnchorView(R.id.fab)
                 .setAction("Action", null).show()
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
