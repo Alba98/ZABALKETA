@@ -38,8 +38,14 @@ class RepositorioNieblas(val miDAO: NieblaDAO) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun Insertar(miNiebla: Niebla) {
-        miDAO.Insertar(miNiebla)
+    suspend fun insertNiebla(miNiebla: Niebla) {
+        miDAO.insertNiebla(miNiebla)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insertNieblaWithCheck(miNiebla: Niebla) {
+        miDAO.insertNieblaWithCheck(miNiebla)
     }
 
     fun BuscarPorID(id:Int): Flow<Niebla> {

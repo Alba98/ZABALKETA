@@ -273,21 +273,26 @@ class DatosFragment : Fragment() {
 
 
     fun guardar(){
-        (activity as MainActivity).nieblaVM.insertar(Niebla(
-            fecha = binding.tvFecha.text.toString(),
-            idUsuario = 1,
-            hayNiebla = binding.bNiebla.isChecked,
-            idDensidad = binding.sDensidad.selectedItemId.toInt(),
-            idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
-            hayLluvia = binding.bLluvia.isChecked,
-            duracionLluvia = binding.sbDuracionLluvia.progress,
-            hayCorteAgua = binding.bCorteAgua.isChecked,
-            duracionCorteAgua = binding.sbDuracionCorte.progress,
-            incidencia = binding.tvIncidencias.text.toString()
-        ))
-        Toast.makeText(activity,"Niebla insertada", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
-
+        val preferences = (activity as MainActivity)
+            .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        if(preferences.getInt( "idUsuario", -1) != -1) {
+            (activity as MainActivity).nieblaVM.insertNieblaWithCheck(
+                Niebla(
+                    fecha = binding.tvFecha.text.toString(),
+                    idUsuario = preferences.getInt( "idUsuario", -1),
+                    hayNiebla = binding.bNiebla.isChecked,
+                    idDensidad = binding.sDensidad.selectedItemId.toInt(),
+                    idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
+                    hayLluvia = binding.bLluvia.isChecked,
+                    duracionLluvia = binding.sbDuracionLluvia.progress,
+                    hayCorteAgua = binding.bCorteAgua.isChecked,
+                    duracionCorteAgua = binding.sbDuracionCorte.progress,
+                    incidencia = binding.tvIncidencias.text.toString()
+                )
+            )
+            Toast.makeText(activity, "Niebla insertada", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
+        }
     }
 
     fun modificar(idNiebla: Int){

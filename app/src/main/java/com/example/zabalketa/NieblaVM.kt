@@ -42,8 +42,12 @@ class NieblaVM(private val miRepositorio: RepositorioNieblas) : ViewModel() {
     fun mostrarTodas() =viewModelScope.launch {
         datosNieblas= miRepositorio.mostrarTodas().asLiveData()
     }
-    fun insertar(miNiebla: Niebla) = viewModelScope.launch {
-        miRepositorio.Insertar(miNiebla)
+    fun insertNiebla(miNiebla: Niebla) = viewModelScope.launch {
+        miRepositorio.insertNiebla(miNiebla)
+    }
+
+    fun insertNieblaWithCheck(miNiebla: Niebla) = viewModelScope.launch {
+        miRepositorio.insertNieblaWithCheck(miNiebla)
     }
 
     fun buscarPorID(id:Int) = viewModelScope.launch  {

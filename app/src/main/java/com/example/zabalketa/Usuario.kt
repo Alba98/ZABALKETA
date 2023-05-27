@@ -2,10 +2,14 @@ package com.example.zabalketa
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
-@Entity(tableName = "tabla_usuarios")
+@Entity(
+    tableName = "tabla_usuarios",
+    indices = [Index(value = ["username"], unique = true)]
+)
 data class Usuario(
     @PrimaryKey (autoGenerate = true)
     var id: Int = 0,

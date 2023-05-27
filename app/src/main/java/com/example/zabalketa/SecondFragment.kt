@@ -84,8 +84,6 @@ class SecondFragment : Fragment() {
             } ?: Toast.makeText(activity,"es null", Toast.LENGTH_LONG).show()
 
         }
-
-        //Toast.makeText(activity, (activity as MainActivity).nieblaVM.datosNieblas2.value.size, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

@@ -42,24 +42,21 @@ class FirstFragment : Fragment() {
 
         if(preferences.getInt( "idUsuario", -1) != -1) {
             // Log.d("idUsuario", preferences.getInt( "idUsuario", -1).toString())
-
-
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-        binding.loginbtn.setOnClickListener {
-           // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            (activity as MainActivity).usuarioVM.buscarPorUsername(
-                binding.username.text.toString()
-            )
-            (activity as MainActivity).usuarioVM.miUsuario.observe(activity as MainActivity){
-                    it?.let{
-                        miUsuario=it
+        else {
+            binding.loginbtn.setOnClickListener {
+                // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                (activity as MainActivity).usuarioVM.buscarPorUsername(
+                    binding.username.text.toString()
+                )
+                (activity as MainActivity).usuarioVM.miUsuario.observe(activity as MainActivity) {
+                    it?.let {
+                        miUsuario = it
                         // Toast.makeText(activity, miUsuario.toString(), Toast.LENGTH_LONG).show()
-                        if(miUsuario.clave ==  binding.password.text.toString()) {
-                            Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
-                            //guardar en SharedPreferences usuario
-
-                            // write all the data entered by the user in SharedPreference and apply
+                        if (miUsuario.clave == binding.password.text.toString()) {
+                            Toast.makeText(activity, "Bienvenid@", Toast.LENGTH_LONG).show()
+                            //guardar en SharedPreferences idUsuario
                             myEdit.putInt("idUsuario", miUsuario.id)
                             myEdit.apply()
 
@@ -68,8 +65,8 @@ class FirstFragment : Fragment() {
                             Toast.makeText(activity, "clave incorrecta", Toast.LENGTH_LONG).show()
                     } ?: Toast.makeText(activity, "usuario igual a null", Toast.LENGTH_LONG).show()
 
+                }
             }
-
         }
     }
 
