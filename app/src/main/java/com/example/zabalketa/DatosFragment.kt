@@ -299,19 +299,25 @@ class DatosFragment : Fragment() {
     }
 
     fun modificar(idNiebla: Int){
-        (activity as MainActivity).nieblaVM.actualizar(Niebla(
-            idNiebla,
-            fecha = binding.tvFecha.text.toString(),
-            idUsuario = 1,
-            hayNiebla = binding.bNiebla.isChecked,
-            idDensidad = binding.sDensidad.selectedItemId.toInt(),
-            idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
-            hayLluvia = binding.bLluvia.isChecked,
-            duracionLluvia = binding.sbDuracionLluvia.progress,
-            hayCorteAgua = binding.bCorteAgua.isChecked,
-            duracionCorteAgua = binding.sbDuracionCorte.progress,
-            incidencia = binding.tvIncidencias.text.toString()
-        ))
+        val preferences = (activity as MainActivity)
+            .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        if(preferences.getInt( "idUsuario", -1) != -1) {
+            (activity as MainActivity).nieblaVM.actualizar(
+                Niebla(
+                    idNiebla,
+                    fecha = binding.tvFecha.text.toString(),
+                    idUsuario = preferences.getInt( "idUsuario", -1),
+                    hayNiebla = binding.bNiebla.isChecked,
+                    idDensidad = binding.sDensidad.selectedItemId.toInt(),
+                    idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
+                    hayLluvia = binding.bLluvia.isChecked,
+                    duracionLluvia = binding.sbDuracionLluvia.progress,
+                    hayCorteAgua = binding.bCorteAgua.isChecked,
+                    duracionCorteAgua = binding.sbDuracionCorte.progress,
+                    incidencia = binding.tvIncidencias.text.toString()
+                )
+            )
+        }
         Toast.makeText(activity,"Niebla modificada", Toast.LENGTH_LONG).show()
         findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
     }
