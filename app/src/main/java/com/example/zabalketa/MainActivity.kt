@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.zabalketa.databinding.ActivityMainBinding
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -27,10 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     val miRepositorioUsuario by lazy { RepositorioUsuarios(dataBase.miUsuarioDAO()) }
     val usuarioVM:UsuarioVM by viewModels { UsuarioVMFactory(miRepositorioUsuario) }
-
-    var sharedpreferences: SharedPreferences? = null
-    val mypreference = "usuario"
-    val userID = "userID_Key"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -74,5 +72,14 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    fun hideAppBarLayout() {
+        val appBarLayout = findViewById<AppBarLayout>(R.id.appBarLayout)
+        appBarLayout?.visibility = View.INVISIBLE
+    }
+
+    fun showAppBarLayout() {
+        binding.toolbar.visibility = View.VISIBLE
     }
 }

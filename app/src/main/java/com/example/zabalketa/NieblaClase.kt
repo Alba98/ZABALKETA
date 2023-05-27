@@ -6,11 +6,8 @@ data class NieblaClase(
     val username: String,
     val region: String,
     val hayNiebla: Boolean,
-    val densidad: String,
     val hayLluvia: Boolean,
-    val duracionLluvia: Int,
     val hayCorteAgua: Boolean,
-    val duracionCorteAgua: Int,
     val incidencia: String
 )
 

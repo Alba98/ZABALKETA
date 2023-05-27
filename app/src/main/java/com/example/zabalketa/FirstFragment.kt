@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.zabalketa.databinding.FragmentFirstBinding
+import com.google.android.material.appbar.AppBarLayout
 
 
 /**
@@ -27,7 +28,6 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -35,6 +35,12 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Espera a que la vista se haya creado en MainActivity
+        //view.post {
+        //    (activity as MainActivity).showAppBarLayout()
+        //}
+
         var miUsuario = Usuario()
         val preferences = (activity as MainActivity)
             .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)

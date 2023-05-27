@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zabalketa.databinding.FragmentSecondBinding
+import com.google.android.material.appbar.AppBarLayout
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -43,6 +44,8 @@ class SecondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //(activity as MainActivity).showAppBarLayout()
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {

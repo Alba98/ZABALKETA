@@ -3,6 +3,7 @@ package com.example.zabalketa
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
@@ -13,15 +14,20 @@ class AdaptadorNiebla(val Nieblas: List<NieblaClase>) : RecyclerView.Adapter<Ada
         var tvFecha: TextView
         var tvRegion: TextView
         var tvUsername: TextView
-        var tvDescripcion : TextView
         var tvIncidencias : TextView
+        var iNiebla : ImageView
+        var iLluvia : ImageView
+        var iCorteAgua : ImageView
         var id:Int=-1
         init{
             tvFecha=v.findViewById(R.id.tvFecha)
             tvRegion=v.findViewById(R.id.tvRegion)
             tvUsername=v.findViewById(R.id.tvUsername)
-            tvDescripcion=v.findViewById(R.id.tvDescripcion)
             tvIncidencias=v.findViewById(R.id.tvIncidencias)
+
+            iNiebla=v.findViewById(R.id.iNiebla)
+            iLluvia=v.findViewById(R.id.iLluvia)
+            iCorteAgua=v.findViewById(R.id.iCorteAgua)
 
             v.setOnClickListener{
                 val bundle= bundleOf("id" to id)
@@ -40,7 +46,12 @@ class AdaptadorNiebla(val Nieblas: List<NieblaClase>) : RecyclerView.Adapter<Ada
         holder.tvRegion.text="${Nieblas[position].region}"
         holder.tvUsername.text="${Nieblas[position].username}"
         holder.tvIncidencias.text ="${Nieblas[position].incidencia}"
-        holder.tvDescripcion.text="hayNiebla: ${Nieblas[position].hayNiebla} + " + "hayLluvia: ${Nieblas[position].hayLluvia} +" +  "hayCorteAgua: ${Nieblas[position].hayCorteAgua}"
+
+        holder.iNiebla.visibility = if (Nieblas[position].hayNiebla) View.VISIBLE else View.INVISIBLE
+        holder.iLluvia.visibility = if (Nieblas[position].hayLluvia) View.VISIBLE else View.INVISIBLE
+        holder.iNiebla.visibility = if (Nieblas[position].hayCorteAgua) View.VISIBLE else View.INVISIBLE
+
+        // holder.tvDescripcion.text="hayNiebla: ${Nieblas[position].hayNiebla} + " + "hayLluvia: ${Nieblas[position].hayLluvia} +" +  "hayCorteAgua: ${Nieblas[position].hayCorteAgua}"
         holder.id=Nieblas[position].id
     }
 
