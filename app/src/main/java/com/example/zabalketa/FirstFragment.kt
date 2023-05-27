@@ -2,6 +2,7 @@ package com.example.zabalketa
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,12 @@ class FirstFragment : Fragment() {
         var miUsuario = Usuario()
         val preferences = (activity as MainActivity)
             .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-        if(preferences.getInt( "isUsuario", -1) != -1) {
+        val myEdit = preferences.edit()
+
+        if(preferences.getInt( "idUsuario", -1) != -1) {
+            // Log.d("idUsuario", preferences.getInt( "idUsuario", -1).toString())
+
+
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
         binding.loginbtn.setOnClickListener {
@@ -52,9 +58,9 @@ class FirstFragment : Fragment() {
                         if(miUsuario.clave ==  binding.password.text.toString()) {
                             Toast.makeText(activity,"Bienvenid@", Toast.LENGTH_LONG).show()
                             //guardar en SharedPreferences usuario
-                            val myEdit = preferences.edit()
+
                             // write all the data entered by the user in SharedPreference and apply
-                            myEdit.putInt("isUsuario", miUsuario.id)
+                            myEdit.putInt("idUsuario", miUsuario.id)
                             myEdit.apply()
 
                             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)

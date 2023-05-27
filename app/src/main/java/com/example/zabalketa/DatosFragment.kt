@@ -2,6 +2,7 @@ package com.example.zabalketa
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.RadioButton
@@ -54,6 +55,7 @@ class DatosFragment : Fragment() {
             binding.sRegion.adapter = AdaptadorRegion(activity as MainActivity, it)
             totalRegiones=it.count()
         }
+        binding.sRegion.setEnabled(false); //desactivar
 
         (activity as MainActivity).nieblaVM.mostrarTodasDensidades()
         (activity as MainActivity).nieblaVM.listaDensidades.observe(activity as MainActivity){
@@ -172,9 +174,15 @@ class DatosFragment : Fragment() {
             //pillar del shared Preferences
             val preferences = (activity as MainActivity)
                 .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-            if(preferences.getInt( "isUsuario", -1) != -1) {
-                (activity as MainActivity).usuarioVM.buscarPorId(preferences.getInt( "isUsuario", -1))
-                (activity as MainActivity).usuarioVM.miUsuario.value?.let { setearSpinerRegion(it.idRegion) }
+            if(preferences.getInt( "idUsuario", -1) != -1) {
+                // Log.d("idUsuario", preferences.getInt( "idUsuario", -1).toString())
+                (activity as MainActivity).usuarioVM.buscarPorId(preferences.getInt( "idUsuario", -1))
+                (activity as MainActivity).usuarioVM.miUsuario.observe(activity as MainActivity){
+                    it?.let{
+                        Toast.makeText(activity, it.toString(), Toast.LENGTH_LONG).show()
+                        setearSpinerRegion(it.idRegion)
+                    } ?: Toast.makeText(activity, "usuario igual a null", Toast.LENGTH_LONG).show()
+                }
             }
 
         }
@@ -252,11 +260,11 @@ class DatosFragment : Fragment() {
     }
 
     private fun setearSpinerRegion(idRegion: Int) {
-        if(totalRegiones!=-1){
+        if(totalRegiones!=-1) {
             for (i in 0 until totalRegiones) {
                 val option = binding.sRegion.adapter.getItemId(i).toInt()
                 if (option == idRegion) {
-                    binding.sDensidad.setSelection(i)
+                    binding.sRegion.setSelection(i)
                     break
                 }
             }

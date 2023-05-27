@@ -1,5 +1,6 @@
 package com.example.zabalketa
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -57,6 +58,15 @@ class SecondFragment : Fragment() {
                         findNavController().navigate(R.id.action_SecondFragment_to_datosFragment)
                         true
                     }
+                    R.id.miPerfil -> {
+                        val preferences = (activity as MainActivity)
+                            .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+                        val myEdit = preferences.edit()
+                        myEdit.putInt("idUsuario", -1)
+                        myEdit.apply()
+                        findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                        true
+                    }
                     else -> false
                 }
             }
@@ -70,9 +80,8 @@ class SecondFragment : Fragment() {
             niebla?.let { miRecyclerView = binding.rvPosiciones
                 miRecyclerView.layoutManager = LinearLayoutManager(activity)
                 miRecyclerView.adapter=AdaptadorNiebla(it)
-                //Toast.makeText(activity, it.count(), Toast.LENGTH_LONG).show()
-                Log.d("nieblas",it.count().toString())
-                } ?: Toast.makeText(activity,"es null", Toast.LENGTH_LONG).show()
+                //Log.d("nieblas",it.count().toString())
+            } ?: Toast.makeText(activity,"es null", Toast.LENGTH_LONG).show()
 
         }
 
