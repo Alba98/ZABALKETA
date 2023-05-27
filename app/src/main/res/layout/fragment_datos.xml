@@ -125,17 +125,33 @@
                     android:gravity="center_vertical"
                     android:text="¿Hay lluvia?" />
 
-                <SeekBar
-                    android:id="@+id/sbDuracionLluvia"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_margin="48dp"
-                    android:gravity="center_vertical"
-                    android:min="0"
-                    android:max="24"
-                    android:progress="7"
-                    android:visibility="gone"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/sbDuracionLluvia"
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_margin="48dp"
+                        android:gravity="center_vertical"
+                        android:max="1440"
+                        android:min="0"
+                        android:progress="0"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvDuracionLluviaSeleccionada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Duración lluvia: 0 horas"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -163,17 +179,34 @@
                     android:gravity="center_vertical"
                     android:text="¿Cortes de agua?" />
 
-                <SeekBar
-                    android:id="@+id/sbDuracionCorte"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_margin="48dp"
-                    android:gravity="center_vertical"
-                    android:max="24"
-                    android:min="0"
-                    android:progress="0"
-                    android:visibility="gone"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/sbDuracionCorte"
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_margin="48dp"
+                        android:gravity="center_vertical"
+                        android:max="1440"
+                        android:min="0"
+                        android:progress="0"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvDuracionCorteSeleccionada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Duración corte: 0 horas"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

@@ -152,19 +152,54 @@ class DatosFragment : Fragment() {
             bLluvia.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     sbDuracionLluvia.visibility = View.VISIBLE
+                    tvDuracionLluviaSeleccionada.visibility = View.VISIBLE
                 } else {
                     sbDuracionLluvia.visibility = View.GONE
+                    tvDuracionLluviaSeleccionada.visibility = View.GONE
                 }
             }
 
             bCorteAgua.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     sbDuracionCorte.visibility = View.VISIBLE
+                    tvDuracionCorteSeleccionada.visibility = View.VISIBLE
                 } else {
                     sbDuracionCorte.visibility = View.GONE
+                    tvDuracionCorteSeleccionada.visibility = View.GONE
                 }
             }
 
+            sbDuracionLluvia.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    val horas = progress / 60
+                    val minutos = progress % 60
+                    tvDuracionLluviaSeleccionada.text = "Duración corte: $horas horas $minutos minutos"
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    // No se necesita implementación adicional en este ejemplo
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    // No se necesita implementación adicional en este ejemplo
+                }
+            })
+
+            sbDuracionCorte.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    val horas = progress / 60
+                    val minutos = progress % 60
+                    tvDuracionCorteSeleccionada.text = "Duración corte: $horas horas $minutos minutos"
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    // No se necesita implementación adicional en este ejemplo
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    // No se necesita implementación adicional en este ejemplo
+                }
+            })
         }
 
         idNiebla=arguments?.getInt("id") ?:-1
