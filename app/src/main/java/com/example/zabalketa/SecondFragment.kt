@@ -75,7 +75,9 @@ class SecondFragment : Fragment() {
             }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        (activity as MainActivity).nieblaVM.mostrarTodasNieblas()
+        val preferences = (activity as MainActivity)
+            .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        (activity as MainActivity).nieblaVM.mostrarTodasNieblasUsuario(preferences.getInt( "idUsuario", -1))
 
         //lista de nieblas clase dinamica
         (activity as MainActivity).nieblaVM.datosNieblas2.observe(activity as MainActivity) {

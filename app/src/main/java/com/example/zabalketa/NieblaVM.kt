@@ -39,6 +39,12 @@ class NieblaVM(private val miRepositorio: RepositorioNieblas) : ViewModel() {
     fun mostrarTodasNieblas() =viewModelScope.launch {
         datosNieblas2= miRepositorio.mostrarTodasNieblas().asLiveData()
     }
+    fun mostrarTodasNieblasUsuario(idUsuario: Int) =viewModelScope.launch {
+        if(idUsuario != -1)
+            datosNieblas2= miRepositorio.mostrarTodasNieblasUsuario(idUsuario).asLiveData()
+        else
+            datosNieblas2= miRepositorio.mostrarTodasNieblas().asLiveData()
+    }
     fun mostrarTodas() =viewModelScope.launch {
         datosNieblas= miRepositorio.mostrarTodas().asLiveData()
     }

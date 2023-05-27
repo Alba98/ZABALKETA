@@ -1,5 +1,6 @@
 package com.example.zabalketa
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,16 +43,16 @@ class AdaptadorNiebla(val Nieblas: List<NieblaClase>) : RecyclerView.Adapter<Ada
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvFecha.text= "${Nieblas[position].fecha}"
-        holder.tvRegion.text="${Nieblas[position].region}"
-        holder.tvUsername.text="${Nieblas[position].username}"
-        holder.tvIncidencias.text ="${Nieblas[position].incidencia}"
+        holder.tvFecha.text = "${Nieblas[position].fecha}"
+        holder.tvRegion.text = "${Nieblas[position].region}"
+        holder.tvUsername.text = "${Nieblas[position].username}"
+        holder.tvIncidencias.text = "${Nieblas[position].incidencia}"
 
         holder.iNiebla.visibility = if (Nieblas[position].hayNiebla) View.VISIBLE else View.INVISIBLE
         holder.iLluvia.visibility = if (Nieblas[position].hayLluvia) View.VISIBLE else View.INVISIBLE
-        holder.iNiebla.visibility = if (Nieblas[position].hayCorteAgua) View.VISIBLE else View.INVISIBLE
-
-        // holder.tvDescripcion.text="hayNiebla: ${Nieblas[position].hayNiebla} + " + "hayLluvia: ${Nieblas[position].hayLluvia} +" +  "hayCorteAgua: ${Nieblas[position].hayCorteAgua}"
+        holder.iCorteAgua.visibility = if (Nieblas[position].hayCorteAgua) View.VISIBLE else View.INVISIBLE
+        //Log.d("niebla", "id: ${Nieblas[position].id}  hayNiebla: ${Nieblas[position].hayNiebla} " + "hayLluvia: ${Nieblas[position].hayLluvia} " +  "hayCorteAgua: ${Nieblas[position].hayCorteAgua}")
+        //holder.tvIncidencias.text="hayNiebla: ${Nieblas[position].hayNiebla} " + "hayLluvia: ${Nieblas[position].hayLluvia} " +  "hayCorteAgua: ${Nieblas[position].hayCorteAgua}"
         holder.id=Nieblas[position].id
     }
 

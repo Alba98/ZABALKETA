@@ -196,17 +196,23 @@ class DatosFragment : Fragment() {
 
             (activity as MainActivity).nieblaVM.buscarPorID(idNiebla)
             (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity) { niebla ->
-                miNiebla = niebla
-                binding.tvFecha.setText(niebla.fecha)
-                (activity as MainActivity).usuarioVM.buscarPorId(niebla.idUsuario)
-                (activity as MainActivity).usuarioVM.miUsuario.value?.let { setearSpinerRegion(it.idRegion) }
-                binding.bNiebla.isChecked = niebla.hayNiebla
-                setearSpinerDensidad(niebla.idDensidad)
-                binding.bLluvia.isChecked = niebla.hayLluvia
-                binding.sbDuracionLluvia.progress = niebla.duracionLluvia
-                binding.bCorteAgua.isChecked = niebla.hayCorteAgua
-                binding.sbDuracionCorte.progress = niebla.duracionCorteAgua
-                binding.tvIncidencias.setText(niebla.incidencia)
+                niebla?.let {
+                    miNiebla = niebla
+                    binding.tvFecha.setText(niebla.fecha)
+                    (activity as MainActivity).usuarioVM.buscarPorId(niebla.idUsuario)
+                    (activity as MainActivity).usuarioVM.miUsuario.value?.let {
+                        setearSpinerRegion(
+                            it.idRegion
+                        )
+                    }
+                    binding.bNiebla.isChecked = niebla.hayNiebla
+                    setearSpinerDensidad(niebla.idDensidad)
+                    binding.bLluvia.isChecked = niebla.hayLluvia
+                    binding.sbDuracionLluvia.progress = niebla.duracionLluvia
+                    binding.bCorteAgua.isChecked = niebla.hayCorteAgua
+                    binding.sbDuracionCorte.progress = niebla.duracionCorteAgua
+                    binding.tvIncidencias.setText(niebla.incidencia)
+                }
             }
         }
 
@@ -347,5 +353,7 @@ class DatosFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if (idNiebla!=-1) (activity as MainActivity).nieblaVM.miNiebla.removeObservers(activity as MainActivity)
+        (activity as MainActivity).usuarioVM.miUsuario.removeObservers(activity as MainActivity)
     }
 }
