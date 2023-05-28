@@ -4,11 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.SeekBar
+import android.widget.Spinner
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.MenuHost
@@ -62,10 +65,10 @@ class DatosFragment : Fragment() {
 
         (activity as MainActivity).nieblaVM.mostrarTodasDensidades()
         (activity as MainActivity).nieblaVM.listaDensidades.observe(activity as MainActivity){
-            binding.sDensidad.adapter = AdaptadorDensidad(activity as MainActivity, it)
+            //binding.sDensidad.adapter = AdaptadorDensidad(activity as MainActivity, it)
             totalDensidades=it.count()
         }
-
+/*
         (activity as MainActivity).nieblaVM.mostrarTodasFranjasHorarias()
         (activity as MainActivity).nieblaVM.listaFranjasHorarias.observe(activity as MainActivity) { franjasHorarias ->
             val radioGroup = binding.rgFranjasHorarias
@@ -103,7 +106,62 @@ class DatosFragment : Fragment() {
                 count++
             }
         }
+*/
 
+        (activity as MainActivity).nieblaVM.mostrarTodasDensidades()
+        (activity as MainActivity).nieblaVM.mostrarTodasFranjasHorarias()
+        (activity as MainActivity).nieblaVM.listaFranjasHorarias.observe(activity as MainActivity) { franjasHorarias ->
+            val linearLayout = binding.lFranjasHorarias // Cambia el tipo de vista a LinearLayout
+
+            linearLayout.removeAllViews() // Elimina las vistas anteriores antes de agregar las nuevas
+
+            for (franjaHoraria in franjasHorarias) {
+                // Crear un LinearLayout para cada fila
+                val rowLayout = LinearLayout(activity as MainActivity)
+                rowLayout.orientation = LinearLayout.HORIZONTAL
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                layoutParams.marginStart = resources.getDimensionPixelSize(R.dimen.radio_button_margin_start)
+                layoutParams.marginEnd = resources.getDimensionPixelSize(R.dimen.radio_button_margin_end)
+
+                linearLayout.addView(rowLayout, layoutParams)
+
+                // Agregar TextView para mostrar la hora de la franja horaria
+                val textView = TextView(activity as MainActivity)
+                textView.text = franjaHoraria.franja
+
+                val textViewLayoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                textViewLayoutParams.weight = 1.0f
+
+                rowLayout.addView(textView, textViewLayoutParams)
+
+                // Agregar Spinner para seleccionar la densidad
+                val spinner = Spinner(activity as MainActivity)
+                val containerLayout = LinearLayout(activity as MainActivity)
+                containerLayout.orientation = LinearLayout.HORIZONTAL
+
+                (activity as MainActivity).nieblaVM.listaDensidades.observe(activity as MainActivity){
+                    spinner.adapter = AdaptadorDensidad(activity as MainActivity, it)
+                }
+                spinner.setSelection(0) // Establece la selección predeterminada del Spinner
+
+                val spinnerLayoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                spinnerLayoutParams.marginStart = resources.getDimensionPixelSize(R.dimen.spinner_margin_start)
+                spinnerLayoutParams.marginEnd = resources.getDimensionPixelSize(R.dimen.spinner_margin_end)
+
+                containerLayout.addView(spinner, spinnerLayoutParams)
+                rowLayout.addView(containerLayout)
+            }
+        }
 
         binding.apply {
             // Obtener la fecha actual
@@ -141,11 +199,11 @@ class DatosFragment : Fragment() {
 
             bNiebla.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    sDensidad.visibility = View.VISIBLE
-                    rgFranjasHorarias.visibility = View.VISIBLE
+                    //sDensidad.visibility = View.VISIBLE
+                    lFranjasHorarias.visibility = View.VISIBLE
                 } else {
-                    sDensidad.visibility = View.GONE
-                    rgFranjasHorarias.visibility = View.GONE
+                    //sDensidad.visibility = View.GONE
+                    lFranjasHorarias.visibility = View.GONE
                 }
             }
 
@@ -234,18 +292,44 @@ class DatosFragment : Fragment() {
                 niebla?.let {
                     miNiebla = niebla
                     binding.tvFecha.setText(niebla.fecha)
+
                     (activity as MainActivity).usuarioVM.buscarPorId(niebla.idUsuario)
                     (activity as MainActivity).usuarioVM.miUsuario.value?.let {
-                        setearSpinerRegion(
-                            it.idRegion
-                        )
+                        setearSpinerRegion(it.idRegion)
                     }
+
                     binding.bNiebla.isChecked = niebla.hayNiebla
-                    setearSpinerDensidad(niebla.idDensidad)
+
+                    // Establecer los valores seleccionados en los Spinners
+                    for (i in 0 until binding.lFranjasHorarias.childCount) {
+                        val rowLayout = binding.lFranjasHorarias.getChildAt(i) as? LinearLayout
+                        val containerLayout = rowLayout?.getChildAt(1) as? LinearLayout
+                        val spinner = containerLayout?.getChildAt(0) as? Spinner
+
+                        if (spinner != null) {
+                            val franjaHorariaDensidad = niebla.franjasDensidades.find { it.idFranjaHoraria == i }
+                            val selectedDensidadId = franjaHorariaDensidad?.idDensidad
+
+                            // Obtener la posición correspondiente al ID de la densidad seleccionada
+                            val position = selectedDensidadId?.let { idDensidad ->
+                                (spinner.adapter as? AdaptadorDensidad)?.getPositionById(
+                                    idDensidad
+                                )
+                            }
+
+                            // Establecer la selección en el spinner
+                            if (position != null) {
+                                spinner.setSelection(position)
+                            }
+                        }
+                    }
+
                     binding.bLluvia.isChecked = niebla.hayLluvia
                     binding.sbDuracionLluvia.progress = niebla.duracionLluvia
+
                     binding.bCorteAgua.isChecked = niebla.hayCorteAgua
                     binding.sbDuracionCorte.progress = niebla.duracionCorteAgua
+
                     binding.tvIncidencias.setText(niebla.incidencia)
                 }
             }
@@ -280,29 +364,6 @@ class DatosFragment : Fragment() {
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    fun convertStringToData(getDate: String?): Date? {
-        var today: Date?=null
-        val formatter = SimpleDateFormat("dd/MM/yyyy")
-        try {
-            today = getDate?.let { formatter.parse(it) }
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return today
-    }
-
-    fun setearSpinerDensidad(idDensidad:Int){
-        if(totalDensidades!=-1){
-            for (i in 0 until totalDensidades) {
-                val option = binding.sDensidad.adapter.getItemId(i).toInt()
-                if (option == idDensidad) {
-                    binding.sDensidad.setSelection(i)
-                    break
-                }
-            }
-        }
-    }
-
     private fun setearSpinerRegion(idRegion: Int) {
         if(totalRegiones!=-1) {
             for (i in 0 until totalRegiones) {
@@ -315,18 +376,33 @@ class DatosFragment : Fragment() {
         }
     }
 
+    fun guardar() {
+        val preferences = (activity as MainActivity).getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+        if (preferences.getInt("idUsuario", -1) != -1) {
+            val selectedFranjasDensidades = mutableListOf<FranjaHorariaDensidad>()
 
-    fun guardar(){
-        val preferences = (activity as MainActivity)
-            .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
-        if(preferences.getInt( "idUsuario", -1) != -1) {
+            for (i in 0 until binding.lFranjasHorarias.childCount) {
+                val rowLayout = binding.lFranjasHorarias.getChildAt(i) as? LinearLayout
+                val containerLayout = rowLayout?.getChildAt(1) as? LinearLayout
+                val spinner = containerLayout?.getChildAt(0) as? Spinner
+
+                if (spinner != null) {
+                    val selectedDensidad = spinner.selectedItem as Densidad
+                    val franjaHorariaDensidad = FranjaHorariaDensidad(
+                        idFranjaHoraria = i,
+                        idDensidad = selectedDensidad.id
+                    )
+
+                    selectedFranjasDensidades.add(franjaHorariaDensidad)
+                }
+            }
+
             (activity as MainActivity).nieblaVM.insertNieblaWithCheck(
                 Niebla(
                     fecha = binding.tvFecha.text.toString(),
-                    idUsuario = preferences.getInt( "idUsuario", -1),
+                    idUsuario = preferences.getInt("idUsuario", -1),
                     hayNiebla = binding.bNiebla.isChecked,
-                    idDensidad = binding.sDensidad.selectedItemId.toInt(),
-                    idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
+                    franjasDensidades = selectedFranjasDensidades,
                     hayLluvia = binding.bLluvia.isChecked,
                     duracionLluvia = binding.sbDuracionLluvia.progress,
                     hayCorteAgua = binding.bCorteAgua.isChecked,
@@ -334,23 +410,42 @@ class DatosFragment : Fragment() {
                     incidencia = binding.tvIncidencias.text.toString()
                 )
             )
+
             Toast.makeText(activity, "Niebla insertada", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
         }
     }
 
+
     fun modificar(idNiebla: Int){
         val preferences = (activity as MainActivity)
             .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
         if(preferences.getInt( "idUsuario", -1) != -1) {
+            val selectedFranjasDensidades = mutableListOf<FranjaHorariaDensidad>()
+
+            for (i in 0 until binding.lFranjasHorarias.childCount) {
+                val rowLayout = binding.lFranjasHorarias.getChildAt(i) as? LinearLayout
+                val containerLayout = rowLayout?.getChildAt(1) as? LinearLayout
+                val spinner = containerLayout?.getChildAt(0) as? Spinner
+
+                if (spinner != null) {
+                    val selectedDensidad = spinner.selectedItem as Densidad
+                    val franjaHorariaDensidad = FranjaHorariaDensidad(
+                        idFranjaHoraria = i,
+                        idDensidad = selectedDensidad.id
+                    )
+
+                    selectedFranjasDensidades.add(franjaHorariaDensidad)
+                }
+            }
+
             (activity as MainActivity).nieblaVM.actualizar(
                 Niebla(
                     idNiebla,
                     fecha = binding.tvFecha.text.toString(),
                     idUsuario = preferences.getInt( "idUsuario", -1),
                     hayNiebla = binding.bNiebla.isChecked,
-                    idDensidad = binding.sDensidad.selectedItemId.toInt(),
-                    idFranja = binding.rgFranjasHorarias.checkedRadioButtonId,
+                    franjasDensidades = selectedFranjasDensidades,
                     hayLluvia = binding.bLluvia.isChecked,
                     duracionLluvia = binding.sbDuracionLluvia.progress,
                     hayCorteAgua = binding.bCorteAgua.isChecked,
@@ -385,6 +480,21 @@ class DatosFragment : Fragment() {
 
         return true
     }
+
+    private fun obtenerFranjaHorariaPorTexto(texto: String): FranjaHoraria? {
+        val franjasHorarias = (activity as MainActivity).nieblaVM.listaFranjasHorarias.value
+
+        if (franjasHorarias != null) {
+            for (franjaHoraria in franjasHorarias) {
+                if (franjaHoraria.franja == texto) {
+                    return franjaHoraria
+                }
+            }
+        }
+
+        return null
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

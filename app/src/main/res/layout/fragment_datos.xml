@@ -69,20 +69,8 @@
                     android:gravity="center_vertical"
                     android:text="¿Hay niebla?" />
 
-                <Spinner
-                    android:id="@+id/sDensidad"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_margin="48dp"
-                    android:gravity="center_vertical"
-                    android:spinnerMode="dropdown"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:visibility="gone"/>
-
-                <RadioGroup
-                    android:id="@+id/rgFranjasHorarias"
+                <LinearLayout
+                    android:id="@+id/lFranjasHorarias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="48dp"
@@ -97,7 +85,7 @@
                         android:textStyle="bold"
                         android:textSize="20sp"/>
 
-                </RadioGroup>
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 
 
 @Database(entities = arrayOf(Usuario::class, Region::class, Niebla::class, Densidad::class, FranjaHoraria::class), version = 1, exportSchema = false)
+@TypeConverters(FranjaHorariaDensidadListConverter::class)
 abstract class BaseDatos:RoomDatabase() {
     abstract fun miUsuarioDAO():UsuarioDAO
     abstract fun miNieblaDAO():NieblaDAO
@@ -46,9 +48,10 @@ abstract class BaseDatos:RoomDatabase() {
                     Usuario(username = "admin", clave = "admin", idRegion = 2)
                 )
                 val densidadesIniciales = listOf(
-                    Densidad(densidad = "Intensa"),
+                    Densidad(densidad = "Sin niebla"),
+                    Densidad(densidad="Poco intensa"),
                     Densidad(densidad="Normal"),
-                    Densidad(densidad="Poco intensa")
+                    Densidad(densidad = "Intensa")
                 )
                 val franjaHorariaIniciales = listOf(
                     FranjaHoraria(franja = "6:00 - 9:00"),
