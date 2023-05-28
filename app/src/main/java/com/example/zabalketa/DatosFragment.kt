@@ -68,45 +68,6 @@ class DatosFragment : Fragment() {
             //binding.sDensidad.adapter = AdaptadorDensidad(activity as MainActivity, it)
             totalDensidades=it.count()
         }
-/*
-        (activity as MainActivity).nieblaVM.mostrarTodasFranjasHorarias()
-        (activity as MainActivity).nieblaVM.listaFranjasHorarias.observe(activity as MainActivity) { franjasHorarias ->
-            val radioGroup = binding.rgFranjasHorarias
-
-            var rowLayout: LinearLayout? = null // Layout para cada fila de RadioButton
-            var count = 0 // Contador para determinar cuándo se deben crear nuevas filas
-
-            for (franjaHoraria in franjasHorarias) {
-                if (count % 2 == 0) {
-                    // Crear un nuevo LinearLayout para cada par de RadioButton
-                    rowLayout = LinearLayout(activity as MainActivity)
-                    rowLayout.orientation = LinearLayout.HORIZONTAL
-
-                    val layoutParams = RadioGroup.LayoutParams(
-                        RadioGroup.LayoutParams.MATCH_PARENT,
-                        RadioGroup.LayoutParams.WRAP_CONTENT
-                    )
-                    radioGroup.addView(rowLayout, layoutParams)
-                }
-
-                val radioButton = RadioButton(activity as MainActivity)
-                radioButton.id = View.generateViewId()
-                radioButton.text = franjaHoraria.franja
-
-                val layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1.0f
-                )
-                layoutParams.marginStart = resources.getDimensionPixelSize(R.dimen.radio_button_margin_start)
-                layoutParams.marginEnd = resources.getDimensionPixelSize(R.dimen.radio_button_margin_end)
-
-                rowLayout?.addView(radioButton, layoutParams)
-
-                count++
-            }
-        }
-*/
 
         (activity as MainActivity).nieblaVM.mostrarTodasDensidades()
         (activity as MainActivity).nieblaVM.mostrarTodasFranjasHorarias()
@@ -263,9 +224,9 @@ class DatosFragment : Fragment() {
         idNiebla=arguments?.getInt("id") ?:-1
         var miNiebla = Niebla()
         if(idNiebla==-1){
-            binding.bBorrar.isEnabled=false
-            binding.bModificar.isEnabled=false
-            binding.bInsertar.isEnabled=true
+            binding.bInsertar.visibility = View.VISIBLE
+            binding.bBorrar.visibility = View.INVISIBLE
+            binding.bModificar.visibility = View.INVISIBLE
 
             //pillar del shared Preferences
             val preferences = (activity as MainActivity)
@@ -283,9 +244,10 @@ class DatosFragment : Fragment() {
 
         }
         else{
-            binding.bBorrar.isEnabled=true
-            binding.bModificar.isEnabled=true
-            binding.bInsertar.isEnabled=false
+            binding.bInsertar.visibility = View.INVISIBLE
+            binding.bBorrar.visibility = View.VISIBLE
+            binding.bModificar.visibility = View.VISIBLE
+
 
             (activity as MainActivity).nieblaVM.buscarPorID(idNiebla)
             (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity) { niebla ->
@@ -300,30 +262,28 @@ class DatosFragment : Fragment() {
 
                     binding.bNiebla.isChecked = niebla.hayNiebla
 
-                    // Establecer los valores seleccionados en los Spinners
-                    for (i in 0 until binding.lFranjasHorarias.childCount) {
-                        val rowLayout = binding.lFranjasHorarias.getChildAt(i) as? LinearLayout
-                        val containerLayout = rowLayout?.getChildAt(1) as? LinearLayout
-                        val spinner = containerLayout?.getChildAt(0) as? Spinner
+                    // Observar la lista de densidades y configurar el adaptador y la selección en los Spinners
+                    (activity as MainActivity).nieblaVM.listaDensidades.observe(activity as MainActivity) { densidades ->
+                        // Configurar el adaptador para los Spinners de densidades
+                        for (i in 0 until binding.lFranjasHorarias.childCount) {
+                            val rowLayout = binding.lFranjasHorarias.getChildAt(i) as? LinearLayout
+                            val containerLayout = rowLayout?.getChildAt(1) as? LinearLayout
+                            val spinner = containerLayout?.getChildAt(0) as? Spinner
 
-                        if (spinner != null) {
-                            val franjaHorariaDensidad = niebla.franjasDensidades.find { it.idFranjaHoraria == i }
+                            spinner?.adapter = AdaptadorDensidad(activity as MainActivity, densidades)
+
+                            // Obtener la posición de la selección en función del ID de densidad guardado
+                            val franjaHorariaDensidad = miNiebla.franjasDensidades.find { it.idFranjaHoraria == i }
                             val selectedDensidadId = franjaHorariaDensidad?.idDensidad
-
-                            // Obtener la posición correspondiente al ID de la densidad seleccionada
                             val position = selectedDensidadId?.let { idDensidad ->
-                                (spinner.adapter as? AdaptadorDensidad)?.getPositionById(
-                                    idDensidad
-                                )
+                                (spinner?.adapter as? AdaptadorDensidad)?.getPositionById(idDensidad)
                             }
 
-                            // Establecer la selección en el spinner
-                            if (position != null) {
-                                spinner.setSelection(position)
-                            }
+                            // Establecer la selección en el Spinner
+                            position?.let { spinner?.setSelection(it) }
                         }
                     }
-
+                    Log.d("ver niebla.franjasDensidades", niebla.franjasDensidades.toString())
                     binding.bLluvia.isChecked = niebla.hayLluvia
                     binding.sbDuracionLluvia.progress = niebla.duracionLluvia
 
@@ -396,7 +356,7 @@ class DatosFragment : Fragment() {
                     selectedFranjasDensidades.add(franjaHorariaDensidad)
                 }
             }
-
+            Log.d("guardar niebla.franjasDensidades", selectedFranjasDensidades.toString())
             (activity as MainActivity).nieblaVM.insertNieblaWithCheck(
                 Niebla(
                     fecha = binding.tvFecha.text.toString(),
@@ -438,7 +398,7 @@ class DatosFragment : Fragment() {
                     selectedFranjasDensidades.add(franjaHorariaDensidad)
                 }
             }
-
+            Log.d("editar niebla.franjasDensidades", selectedFranjasDensidades.toString())
             (activity as MainActivity).nieblaVM.actualizar(
                 Niebla(
                     idNiebla,
