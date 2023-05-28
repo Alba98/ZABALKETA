@@ -323,6 +323,16 @@ class DatosFragment : Fragment() {
                 }
             }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        binding.bInsertar.setOnClickListener {
+            if(validarContenido()) guardar()
+        }
+        binding.bBorrar.setOnClickListener {
+            borrar(miNiebla)
+        }
+        binding.bModificar.setOnClickListener {
+            if(validarContenido()) modificar(idNiebla)
+        }
     }
 
     private fun setearSpinerRegion(idRegion: Int) {

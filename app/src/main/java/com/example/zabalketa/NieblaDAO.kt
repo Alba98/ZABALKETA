@@ -51,6 +51,7 @@ interface NieblaDAO {
             insertNiebla(niebla)
         } else {
             // Actualizar la entrada existente en lugar de manejar el caso de existencia
+            niebla.id = existingNiebla.id
             Actualizar(niebla)
         }
     }

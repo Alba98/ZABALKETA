@@ -44,8 +44,10 @@ abstract class BaseDatos:RoomDatabase() {
                     Region(region = "CHOQUEMARCA")
                 )
                 val usuariosIniciales = listOf(
-                    Usuario(username = "albatxuL", clave = "test", idRegion = 1),
-                    Usuario(username = "admin", clave = "admin", idRegion = 2)
+                    Usuario(username = "alba", clave = "12345", idRegion = 1),
+                    Usuario(username = "maider", clave = "12345", idRegion = 2),
+                    Usuario(username = "andrea", clave = "12345", idRegion = 3),
+                    Usuario(username = "miren", clave = "12345", idRegion = 4 )
                 )
                 val densidadesIniciales = listOf(
                     Densidad(densidad = "Sin niebla"),

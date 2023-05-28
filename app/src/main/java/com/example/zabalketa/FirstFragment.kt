@@ -69,7 +69,7 @@ class FirstFragment : Fragment() {
                             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                         } else
                             Toast.makeText(activity, "clave incorrecta", Toast.LENGTH_LONG).show()
-                    } ?: Toast.makeText(activity, "usuario igual a null", Toast.LENGTH_LONG).show()
+                    } ?: Toast.makeText(activity, "usuario no encontrado", Toast.LENGTH_LONG).show()
 
                 }
             }
