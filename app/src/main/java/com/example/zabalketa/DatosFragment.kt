@@ -3,6 +3,7 @@ package com.example.zabalketa
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
@@ -93,6 +94,7 @@ class DatosFragment : Fragment() {
                 // Agregar TextView para mostrar la hora de la franja horaria
                 val textView = TextView(activity as MainActivity)
                 textView.text = franjaHoraria.franja
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
 
                 val textViewLayoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -248,7 +250,6 @@ class DatosFragment : Fragment() {
             binding.bBorrar.visibility = View.VISIBLE
             binding.bModificar.visibility = View.VISIBLE
 
-
             (activity as MainActivity).nieblaVM.buscarPorID(idNiebla)
             (activity as MainActivity).nieblaVM.miNiebla.observe(activity as MainActivity) { niebla ->
                 niebla?.let {
@@ -283,7 +284,7 @@ class DatosFragment : Fragment() {
                             position?.let { spinner?.setSelection(it) }
                         }
                     }
-                    Log.d("ver niebla.franjasDensidades", niebla.franjasDensidades.toString())
+                    //Log.d("ver Densidades", niebla.franjasDensidades.toString())
                     binding.bLluvia.isChecked = niebla.hayLluvia
                     binding.sbDuracionLluvia.progress = niebla.duracionLluvia
 
@@ -356,7 +357,7 @@ class DatosFragment : Fragment() {
                     selectedFranjasDensidades.add(franjaHorariaDensidad)
                 }
             }
-            Log.d("guardar niebla.franjasDensidades", selectedFranjasDensidades.toString())
+            //Log.d("guardar Densidades", selectedFranjasDensidades.toString())
             (activity as MainActivity).nieblaVM.insertNieblaWithCheck(
                 Niebla(
                     fecha = binding.tvFecha.text.toString(),
@@ -375,7 +376,6 @@ class DatosFragment : Fragment() {
             findNavController().navigate(R.id.action_datosFragment_to_SecondFragment)
         }
     }
-
 
     fun modificar(idNiebla: Int){
         val preferences = (activity as MainActivity)
@@ -398,7 +398,7 @@ class DatosFragment : Fragment() {
                     selectedFranjasDensidades.add(franjaHorariaDensidad)
                 }
             }
-            Log.d("editar niebla.franjasDensidades", selectedFranjasDensidades.toString())
+            //Log.d("editar Densidades", selectedFranjasDensidades.toString())
             (activity as MainActivity).nieblaVM.actualizar(
                 Niebla(
                     idNiebla,
@@ -425,11 +425,11 @@ class DatosFragment : Fragment() {
     }
 
     fun validarContenido():Boolean{
-        // if (binding.tvFecha.text.isEmpty() || binding.sRegion.selectedItemPosition == 0) {
-        //     Toast.makeText(activity, "Debe seleccionar una fecha y una región", Toast.LENGTH_LONG).show()
+        // if (binding.tvFecha.text.isEmpty()) {
+        //     Toast.makeText(activity, "Debe seleccionar una fecha", Toast.LENGTH_LONG).show()
         //     return false
         // }
-
+        //
         // val fechaSeleccionada = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(binding.tvFecha.text.toString())
         // val fechaHoy = Calendar.getInstance().time
         //
@@ -437,22 +437,7 @@ class DatosFragment : Fragment() {
         //     Toast.makeText(activity, "La fecha seleccionada debe ser igual o posterior a hoy", Toast.LENGTH_LONG).show()
         //     return false
         // }
-
         return true
-    }
-
-    private fun obtenerFranjaHorariaPorTexto(texto: String): FranjaHoraria? {
-        val franjasHorarias = (activity as MainActivity).nieblaVM.listaFranjasHorarias.value
-
-        if (franjasHorarias != null) {
-            for (franjaHoraria in franjasHorarias) {
-                if (franjaHoraria.franja == texto) {
-                    return franjaHoraria
-                }
-            }
-        }
-
-        return null
     }
 
     override fun onDestroyView() {

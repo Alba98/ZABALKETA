@@ -50,9 +50,8 @@ interface NieblaDAO {
         if (existingNiebla == null) {
             insertNiebla(niebla)
         } else {
-            // Handle the case when an entry for the same date and user already exists
-            // You can choose to update the existing entry or ignore the new insertion
-            // based on your application's requirements.
+            // Actualizar la entrada existente en lugar de manejar el caso de existencia
+            Actualizar(niebla)
         }
     }
 

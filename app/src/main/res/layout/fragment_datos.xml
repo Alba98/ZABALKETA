@@ -30,6 +30,7 @@
                 android:hint="Fecha"
                 android:inputType="date"
                 android:maxLines="1"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -67,6 +68,7 @@
                     android:layout_height="48dp"
                     android:layout_margin="48dp"
                     android:gravity="center_vertical"
+                    android:textSize="18sp"
                     android:text="¿Hay niebla?" />
 
                 <LinearLayout
@@ -111,12 +113,22 @@
                     android:layout_height="48dp"
                     android:layout_margin="48dp"
                     android:gravity="center_vertical"
+                    android:textSize="18sp"
                     android:text="¿Hay lluvia?" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDuracionLluviaSeleccionada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Duración lluvia: 0 horas"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
 
                     <SeekBar
                         android:id="@+id/sbDuracionLluvia"
@@ -129,15 +141,6 @@
                         android:min="0"
                         android:progress="0"
                         android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tvDuracionLluviaSeleccionada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Duración lluvia: 0 horas"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -165,12 +168,23 @@
                     android:layout_height="48dp"
                     android:layout_margin="48dp"
                     android:gravity="center_vertical"
+                    android:textSize="18sp"
                     android:text="¿Cortes de agua?" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDuracionCorteSeleccionada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Duración corte: 0 horas"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
+
 
                     <SeekBar
                         android:id="@+id/sbDuracionCorte"
@@ -183,16 +197,6 @@
                         android:min="0"
                         android:progress="0"
                         android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tvDuracionCorteSeleccionada"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Duración corte: 0 horas"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-
                 </LinearLayout>
 
 

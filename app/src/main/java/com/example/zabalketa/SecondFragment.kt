@@ -57,7 +57,7 @@ class SecondFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
-                    R.id.miStats -> {
+                    R.id.miNuevo -> {
                         findNavController().navigate(R.id.action_SecondFragment_to_datosFragment)
                         true
                     }
@@ -74,6 +74,10 @@ class SecondFragment : Fragment() {
                 }
             }
         },viewLifecycleOwner, Lifecycle.State.RESUMED)
+
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_SecondFragment_to_datosFragment)
+        }
 
         val preferences = (activity as MainActivity)
             .getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
